@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Triết học Mác–Lênin · Không gian 3D</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23e0222b'/%3E%3Ccircle cx='50' cy='50' r='20' fill='%23e8b54d'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ===== 3D canvas ===== -->
+<div id="scene-container"></div>
+
+<!-- ===== Loading screen ===== -->
+<div id="loader">
+  <div class="loader-inner">
+    <div class="loader-ring"></div>
+    <h1>Triết học Mác–Lênin</h1>
+    <p>Đang khởi tạo không gian tư duy 3D…</p>
+    <div class="loader-bar"><div class="loader-fill"></div></div>
+  </div>
+</div>
+
+<script>
+/* Loader biến mất ĐỘC LẬP với main.js — không bao giờ kẹt ở màn hình khởi tạo */
+(function () {
+  var loader = document.getElementById("loader");
+  function hide() {
+    if (loader && !loader.classList.contains("gone")) loader.classList.add("gone");
+  }
+  window.__hideLoader = hide;              // main.js gọi khi scene sẵn sàng
+  document.addEventListener("mln-ready", hide);
+  document.addEventListener("DOMContentLoaded", function () { setTimeout(hide, 2500); });
+  if (document.readyState !== "loading") setTimeout(hide, 2500); // fallback tuyệt đối
+})();
+
+/* Hiển thị lỗi runtime ngay trên màn hình để dễ chẩn đoán */
+window.addEventListener("error", function (ev) {
+  var msg = (ev && ev.message) ? ev.message : "Lỗi không xác định";
+  var src = (ev && ev.filename) ? ev.filename.split("/").pop() : "";
+  var el = document.getElementById("mln-error");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "mln-error";
+    el.style.cssText = "position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:1000;max-width:92vw;background:rgba(120,0,0,.95);color:#ffe0e0;font-family:Consolas,monospace;font-size:.8rem;padding:12px 16px;border-radius:10px;border:1px solid #ff7777;box-shadow:0 8px 30px rgba(0,0,0,.5);cursor:pointer;white-space:pre-wrap;";
+    el.addEventListener("click", function () { el.remove(); });
+    document.body.appendChild(el);
+  }
+  el.textContent = "⚠ Lỗi: " + msg + (src ? "  [" + src + "]" : "");
+});
+</script>
+
+<!-- ===== Title / top bar ===== -->
+<header id="titlebar">
+  <div class="brand">
+    <span class="brand-icon">◉</span>
+    <div>
+      <h1>Triết học Mác–Lênin</h1>
+      <p>Phép biện chứng duy vật · Chủ nghĩa duy vật lịch sử · Nhận thức luận</p>
+    </div>
+  </div>
+  <nav class="top-nav">
+    <button class="nav-btn" data-topic="materialism">Duy vật</button>
+    <button class="nav-btn" data-topic="dialectics">Biện chứng</button>
+    <button class="nav-btn" data-topic="materialist-dialectics">Biện chứng duy vật</button>
+    <button class="nav-btn" data-topic="cognition">Nhận thức luận</button>
+    <button class="nav-btn" data-topic="practice">Thực tiễn</button>
+    <button class="nav-btn nav-timeline" id="btn-timeline">🕰 Lịch sử</button>
+  </nav>
+
+  <div class="mobile-menu">
+    <button id="hamburger" class="hamburger" aria-label="Mở menu">☰</button>
+    <div id="mobile-nav" class="mobile-nav hidden">
+      <button class="nav-btn" data-topic="materialism">Duy vật</button>
+      <button class="nav-btn" data-topic="dialectics">Biện chứng</button>
+      <button class="nav-btn" data-topic="materialist-dialectics">Biện chứng duy vật</button>
+      <button class="nav-btn" data-topic="cognition">Nhận thức luận</button>
+      <button class="nav-btn" data-topic="practice">Thực tiễn</button>
+      <button class="nav-btn nav-timeline" id="btn-timeline-mobile">🕰 Lịch sử</button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== Panel info khái niệm (bên phải) ===== -->
+<div id="info-panel" class="hidden">
+  <button id="info-close" title="Đóng">✕</button>
+  <div id="info-content"></div>
+</div>
+
+<!-- ===== Overlay hướng dẫn ===== -->
+<div id="help" class="hidden">
+  <div class="card">
+    <button id="help-close" title="Đóng">✕</button>
+    <h2>Hướng dẫn</h2>
+    <ul id="help-list">
+      <li data-kind="mouse"><b>Kéo:</b> xoay camera quan sát toàn cảnh</li>
+      <li data-kind="mouse"><b>Cuộn chuột:</b> phóng to / thu nhỏ</li>
+      <li><b>Nhấp chuột:</b> chọn hình khái niệm để xem nội dung</li>
+      <li data-kind="touch"><b>Chạm & vuốt:</b> xoay camera quan sát</li>
+      <li data-kind="touch"><b>Chụm 2 ngón:</b> phóng to / thu nhỏ</li>
+      <li><b>Thanh trên:</b> nhảy nhanh tới 5 chủ đề lớn</li>
+    </ul>
+    <button id="help-done" class="btn-primary">Bắt đầu khám phá</button>
+  </div>
+</div>
+
+<!-- ===== Panel mô phỏng quy luật (bên trái, mở khi nhấn các quy luật) ===== -->
+<div id="sim-panel" class="hidden">
+  <div class="sim-header">
+    <h2 id="sim-title"></h2>
+    <button id="sim-close">✕</button>
+  </div>
+  <canvas id="sim-canvas"></canvas>
+  <div id="sim-caption"></div>
+  <div id="sim-controls"></div>
+</div>
+
+<!-- ===== Timeline lịch sử ===== -->
+<div id="timeline-modal" class="hidden">
+  <div class="tl-card">
+    <button id="timeline-close">✕</button>
+    <h2 id="tl-title"></h2>
+    <p id="tl-intro"></p>
+    <div id="tl-eras"></div>
+    <div id="tl-track"></div>
+  </div>
+</div>
+
+<!-- ===== Legend & footer ===== -->
+<footer id="footer">
+  <span id="current-target">Nhấp vào các hình khối 3D để khám phá các khái niệm</span>
+  <span class="hint">Nhấn <kbd>H</kbd> để xem hướng dẫn</span>
+</footer>
+
+<script src="js/vendor/three.min.js"></script>
+<script src="js/vendor/OrbitControls.js"></script>
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
