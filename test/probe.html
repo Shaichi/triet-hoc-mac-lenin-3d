@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>MLN Probe</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <!-- Probe: dựng lại đúng cấu trúc index.html + gom lỗi console vào __mlnErrors -->
+  <div id="scene-container"></div>
+  <div id="loader"><div class="loader-inner"><div class="loader-ring"></div>
+    <h1>probe</h1><p>…</p><div class="loader-bar"><div class="loader-fill"></div></div></div></div>
+  <script>
+    window.__mlnErrors = [];
+    window.addEventListener("error", function (ev) { window.__mlnErrors.push(ev.message); });
+    (function () {
+      var loader = document.getElementById("loader");
+      function hide() { if (loader && !loader.classList.contains("gone")) loader.classList.add("gone"); }
+      window.__hideLoader = hide;
+      document.addEventListener("mln-ready", hide);
+      setTimeout(hide, 2500);
+    })();
+  </script>
+  <header id="titlebar"><div class="brand"><span class="brand-icon">◉</span><div><h1>p</h1><p>p</p></div></div>
+    <nav class="top-nav">
+      <button class="nav-btn nav-timeline" id="btn-timeline">🕰 Lịch sử</button>
+    </nav>
+    <div class="mobile-menu"><button id="hamburger" aria-label="menu">☰</button>
+      <div id="mobile-nav" class="mobile-nav hidden">
+        <button class="nav-btn nav-timeline" id="btn-timeline-mobile">🕰 Lịch sử</button>
+      </div></div>
+  </header>
+  <div id="info-panel" class="hidden"><button id="info-close">✕</button><div id="info-content"></div></div>
+  <div id="help" class="hidden"><div class="card"><button id="help-close">✕</button>
+    <h2>Hướng dẫn</h2><ul id="help-list"></ul><button id="help-done">OK</button></div></div>
+  <div id="sim-panel" class="hidden"><div class="sim-header"><h2 id="sim-title"></h2>
+    <button id="sim-close">✕</button></div><canvas id="sim-canvas"></canvas>
+    <div id="sim-caption"></div><div id="sim-controls"></div></div>
+  <div id="timeline-modal" class="hidden"><div class="tl-card"><button id="timeline-close">✕</button>
+    <h2 id="tl-title"></h2><p id="tl-intro"></p><div id="tl-eras"></div><div id="tl-track"></div></div></div>
+  <footer id="footer"><span id="current-target"></span><span class="hint"></span></footer>
+
+  <script src="../js/vendor/three.min.js"></script>
+  <script src="../js/vendor/OrbitControls.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    // Kết quả cho headless đọc qua document title
+    setTimeout(function () {
+      const ok = !!window.__mlnScene && document.getElementById("loader").classList.contains("gone");
+      document.title = "MLNCHECK:" + (ok ? "PASS" : "FAIL") + ":errs=" + window.__mlnErrors.length;
+      if (window.__mlnErrors.length) console.log("ERRORS:", JSON.stringify(window.__mlnErrors));
+    }, 3500);
+  </script>
+</body>
+</html>
