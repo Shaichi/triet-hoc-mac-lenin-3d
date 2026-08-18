@@ -301,6 +301,16 @@
     return sp;
   }
 
+  // Xóa quầng sáng hover của một node và giải phóng texture canvas của nó
+  function clearHoverGlow(mesh) {
+    const g = mesh.userData.hoverGlow;
+    if (!g) return;
+    nodeGroup.remove(g);
+    if (g.material.map) g.material.map.dispose();
+    g.material.dispose();
+    mesh.userData.hoverGlow = null;
+  }
+
   // ---------- Click burst + shockwave (particle explosion) ----------
   const BURST_N = 26;
   const bursts = [];
@@ -1229,12 +1239,7 @@
       m.scale.z += (targetScale - m.scale.z) * 0.18;
     });
     // hover glow ring: xóa glow cũ TRƯỚC khi thêm glow mới (tránh rò rỉ mỗi lần rê chuột)
-    meshes.forEach(function (m) {
-      if (m.userData.hoverGlow && m !== hovered) {
-        nodeGroup.remove(m.userData.hoverGlow);
-        m.userData.hoverGlow = null;
-      }
-    });
+    meshes.forEach(function (m) { if (m !== hovered) clearHoverGlow(m); });
     if (hovered && !hovered.userData.hoverGlow) {
       hovered.userData.hoverGlow = makeGlow(hovered.userData.color, 11);
       nodeGroup.add(hovered.userData.hoverGlow);
@@ -1263,6 +1268,7 @@
   }
 
   function hideInfo(reset) {
+    meshes.forEach(clearHoverGlow); // đóng panel → xóa glow còn treo
     infoPanel.classList.add("hidden");
     document.getElementById("current-target").textContent = "Nhấp vào các hình khối 3D để khám phá các khái niệm";
     if (reset) resetCamera();
@@ -1438,6 +1444,7 @@
   }
 
   function closeSim() {
+    meshes.forEach(clearHoverGlow); // đóng panel → xóa glow còn treo
     simPanel.classList.add("hidden");
     if (sim && sim.dispose) sim.dispose();
     sim = null;
@@ -2296,12 +2303,7 @@
   renderer.domElement.addEventListener("pointermove", onPointerMove);
   // Rời canvas phải xóa hẳn glow hover, nếu không nó "đóng băng" trên node cuối
   renderer.domElement.addEventListener("pointerleave", function () {
-    meshes.forEach(function (m) {
-      if (m.userData.hoverGlow) {
-        nodeGroup.remove(m.userData.hoverGlow);
-        m.userData.hoverGlow = null;
-      }
-    });
+    meshes.forEach(clearHoverGlow);
   });
 
   // ---------- Main loop ----------
