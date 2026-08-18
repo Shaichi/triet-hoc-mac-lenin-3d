@@ -1338,6 +1338,28 @@
     });
   });
 
+  // Legend màu cụm chủ đề — sinh từ DATA, bấm vào bay tới cụm như nav
+  (function buildLegend() {
+    const legend = document.getElementById("legend");
+    if (!legend) return;
+    const topics = ["materialism", "dialectics", "materialist-dialectics", "cognition", "practice"];
+    topics.forEach(function (key) {
+      const t = DATA[key];
+      if (!t) return;
+      const b = document.createElement("button");
+      b.className = "legend-item";
+      const hex = "#" + t.color.toString(16).padStart(6, "0");
+      b.innerHTML = '<span class="legend-dot" style="background:' + hex + ';box-shadow:0 0 8px ' + hex + '"></span><span>' + t.title + '</span>';
+      b.title = t.desc;
+      b.addEventListener("click", function () { hideInfo(); flyToTopic(key); });
+      legend.appendChild(b);
+    });
+    document.getElementById("btn-overview").addEventListener("click", function () {
+      hideInfo(true);
+      document.querySelectorAll(".nav-btn").forEach(function (x) { x.classList.remove("active"); });
+    });
+  })();
+
   // ---------- Mobile hamburger menu ----------
   const mobileNav = document.getElementById("mobile-nav");
   function closeMobileMenu() { mobileNav.classList.add("hidden"); }

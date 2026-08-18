@@ -528,3 +528,22 @@ html, body {
   .top-nav { display: none; }
   .mobile-menu { display: block; }
 }
+
+/* ---------- Legend cụm chủ đề (footer trái) ---------- */
+#legend { display: flex; gap: 6px; flex-wrap: wrap; pointer-events: auto; }
+.legend-item {
+  display: flex; align-items: center; gap: 6px;
+  padding: 4px 10px; border: 1px solid rgba(242,237,226,.16);
+  border-radius: 999px; background: rgba(13,17,28,.55);
+  color: var(--muted); font-family: inherit; font-size: .68rem;
+  cursor: pointer; transition: all .2s; backdrop-filter: blur(6px);
+}
+.legend-item:hover { color: var(--cream); border-color: rgba(242,237,226,.4); transform: translateY(-1px); }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; flex: 0 0 auto; }
+.footer-btn {
+  border: 1px solid rgba(242,237,226,.25); background: rgba(13,17,28,.55);
+  color: var(--cream); font-family: inherit; font-size: .72rem;
+  padding: 4px 10px; border-radius: 999px; cursor: pointer; transition: all .2s;
+}
+.footer-btn:hover { border-color: var(--gold); color: var(--gold); }
+@media (max-width: 860px) { #legend { display: none; } }
