@@ -1274,17 +1274,10 @@
   // Trung tâm các cụm được TÍNH TRỰC TIẾP từ toạ độ thế giới của các nút
   // (không hard-code — luôn đúng dù bố cục dải ngân hà thay đổi)
   function topicCenter(topicKey) {
-    let key = topicKey;
-    // "materialist-dialectics" = các nút thuộc cả hai nhánh biện chứng
-    if (key === "materialist-dialectics") key = "dialectics";
-    let members = meshes.filter(function (m) { return m.userData.node.tag === key; });
-    if (key === "dialectics" && topicKey === "materialist-dialectics") {
-      members = meshes.filter(function (m) {
-        return m.userData.node.tag === "dialectics" && m.userData.node.id !== "dialect-ancient";
-      });
-      // phép biện chứng duy vật: bỏ nút lịch sử cổ đại nếu có nhiều hơn 1
-      if (members.length <= 1) members = meshes.filter(function (m) { return m.userData.node.tag === "dialectics"; });
-    }
+    // tag của node KHỚP 1-1 với khóa cụm trong DATA — không cần map ngoại lệ.
+    // "materialist-dialectics" gồm 12 node mang tag đó (nguyên lý, phạm trù, quy luật);
+    // 3 node lịch sử phép biện chứng mang tag "dialectics" thuộc về nút "Biện chứng".
+    const members = meshes.filter(function (m) { return m.userData.node.tag === topicKey; });
     if (members.length === 0) return null;
     const c = new THREE.Vector3();
     members.forEach(function (m) { c.add(m.getWorldPosition(new THREE.Vector3())); });
@@ -2541,6 +2534,7 @@
     }
   };
   window.__testCloseSim = function () { closeSim(); };
+  window.__mlnTopicCenter = function (key) { return topicCenter(key); };
 
   // Start
   animate();

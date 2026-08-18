@@ -48,7 +48,27 @@
     // Kết quả cho headless đọc qua document title
     setTimeout(function () {
       const ok = !!window.__mlnScene && document.getElementById("loader").classList.contains("gone");
-      document.title = "MLNCHECK:" + (ok ? "PASS" : "FAIL") + ":errs=" + window.__mlnErrors.length;
+      const c = window.__mlnTopicCenter ? window.__mlnTopicCenter("materialist-dialectics") : null;
+      // navOk: tâm trả về phải GẦN tâm thật của các node tag "materialist-dialectics"
+      // (tính độc lập từ scene graph, không tin kết quả của topicCenter).
+      let navOk = false;
+      if (c && window.__mlnScene) {
+        let n = 0; const sx = { x: 0, y: 0, z: 0 };
+        window.__mlnScene.traverse(function (o) {
+          const nd = o.userData && o.userData.node;
+          if (nd && nd.tag === "materialist-dialectics" && o.userData.color) {
+            n++;
+            const w = o.getWorldPosition(new THREE.Vector3());
+            sx.x += w.x; sx.y += w.y; sx.z += w.z;
+          }
+        });
+        if (n >= 2) {
+          const ex = sx.x / n, ey = sx.y / n, ez = sx.z / n;
+          const d = Math.sqrt((c.x - ex) * (c.x - ex) + (c.y - ey) * (c.y - ey) + (c.z - ez) * (c.z - ez));
+          navOk = d < 5;
+        }
+      }
+      document.title = "MLNCHECK:" + (ok && navOk ? "PASS" : "FAIL") + ":errs=" + window.__mlnErrors.length;
       if (window.__mlnErrors.length) console.log("ERRORS:", JSON.stringify(window.__mlnErrors));
     }, 3500);
   </script>
