@@ -19,9 +19,10 @@
 
   // Hệ số màu của node theo loại
   function nodeColor(node) {
-    if (node.rule.indexOf("Quy luật") === 0) return COLORS.red;
-    if (node.rule.indexOf("Cặp phạm trù") === 0) return 0xc98a2b;
-    if (node.rule.indexOf("Nguyên lý") === 0) return 0xa03a3e;
+    const rule = node.rule || ""; // phòng thủ: node thêm sau này có thể quên trường rule
+    if (rule.indexOf("Quy luật") === 0) return COLORS.red;
+    if (rule.indexOf("Cặp phạm trù") === 0) return 0xc98a2b;
+    if (rule.indexOf("Nguyên lý") === 0) return 0xa03a3e;
     if (node.tag === "materialism") return 0xd94f52;
     if (node.tag === "dialectics") return 0xe8b54d;
     if (node.tag === "cognition") return 0x3f8e6a;
