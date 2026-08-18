@@ -1094,47 +1094,58 @@
     });
   }
 
-  nodes.forEach(function (node) {
-    const pos = new THREE.Vector3(node.pos[0], node.pos[1], node.pos[2]);
-    const color = nodeColor(node);
-    const isLaw = node.rule.indexOf("Quy luật") === 0;
+  // Dựng toàn bộ node (mô hình 3D + nhãn sprite) — chỉ gọi từ whenFontReady
+  // để nhãn canvas luôn vẽ bằng "Be Vietnam Pro" đã tải xong.
+  function buildAllNodes() {
+    nodes.forEach(function (node) {
+      const pos = new THREE.Vector3(node.pos[0], node.pos[1], node.pos[2]);
+      const color = nodeColor(node);
+      const isLaw = node.rule.indexOf("Quy luật") === 0;
 
-    // Themed model per node
-    const kind = node.id; // mỗi nút một hình thù riêng theo chủ đề
+      // Themed model per node
+      const kind = node.id; // mỗi nút một hình thù riêng theo chủ đề
 
-    const model = buildModel(node, color);
-    addOutlines(model); // viền đen toàn bộ khối đặc của mô hình
-    // Model sits at LOCAL ORIGIN inside the wrapper mesh (no extra position offset!)
-    const mesh = new THREE.Group();
-    mesh.add(model);
-    mesh.position.copy(pos);   // only the wrapper carries the world position
-    mesh.userData.node = node;
-    mesh.userData.color = color;
-    mesh.userData.isLaw = isLaw;
-    mesh.userData.kind = kind;
+      const model = buildModel(node, color);
+      addOutlines(model); // viền đen toàn bộ khối đặc của mô hình
+      // Model sits at LOCAL ORIGIN inside the wrapper mesh (no extra position offset!)
+      const mesh = new THREE.Group();
+      mesh.add(model);
+      mesh.position.copy(pos);   // only the wrapper carries the world position
+      mesh.userData.node = node;
+      mesh.userData.color = color;
+      mesh.userData.isLaw = isLaw;
+      mesh.userData.kind = kind;
 
-    nodeGroup.add(mesh);
-    meshes.push(mesh);
+      nodeGroup.add(mesh);
+      meshes.push(mesh);
 
-    // Per-model glow so every object visibly glows on the dark backdrop
-    const ambientGlow = makeGlow(color, 13);
-    ambientGlow.position.copy(pos);
-    nodeGroup.add(ambientGlow);
-    mesh.userData.ambientGlow = ambientGlow;
+      // Per-model glow so every object visibly glows on the dark backdrop
+      const ambientGlow = makeGlow(color, 13);
+      ambientGlow.position.copy(pos);
+      nodeGroup.add(ambientGlow);
+      mesh.userData.ambientGlow = ambientGlow;
 
-    // Label — sit a fixed distance below the model's BOTTOM (measured via bounding box)
-    model.updateMatrixWorld(true);
-    const box = new THREE.Box3().setFromObject(model);
-    const bottomYLocal = box.min.y;                       // bottom relative to model origin
-    const label = makeLabel(node.vi, node.rule, color);
-    label.position.set(pos.x, pos.y + bottomYLocal - 2.4, pos.z);
-    label.userData.node = node;
-    nodeGroup.add(label);
-    labels.push(label);
-    mesh.userData.label = label;
+      // Label — sit a fixed distance below the model's BOTTOM (measured via bounding box)
+      model.updateMatrixWorld(true);
+      const box = new THREE.Box3().setFromObject(model);
+      const bottomYLocal = box.min.y;                       // bottom relative to model origin
+      const label = makeLabel(node.vi, node.rule, color);
+      label.position.set(pos.x, pos.y + bottomYLocal - 2.4, pos.z);
+      label.userData.node = node;
+      nodeGroup.add(label);
+      labels.push(label);
+      mesh.userData.label = label;
 
-    // (bỏ đường nối về tâm cho gọn cảnh)
-  });
+      // (bỏ đường nối về tâm cho gọn cảnh)
+    });
+
+    // Build a flat list of every clickable mesh inside the node groups
+    meshes.forEach(function (m) {
+      m.traverse(function (child) {
+        if (child.isMesh) clickables.push(child);
+      });
+    });
+  }
 
   // ---------- Camera fly-to ----------
   let flyTarget = null;
@@ -1160,13 +1171,9 @@
   // ---------- Raycasting for node picking ----------
   const raycaster = new THREE.Raycaster();
   const pointer = new THREE.Vector2();
-  // Build a flat list of every clickable mesh inside the node groups
+  // Khai báo trước: clickables được lấp đầy ở cuối buildAllNodes() (chạy sau,
+  // khi font sẵn sàng); event listener bên dưới chỉ đọc nó sau cú click đầu tiên.
   const clickables = [];
-  meshes.forEach(function (m) {
-    m.traverse(function (child) {
-      if (child.isMesh) clickables.push(child);
-    });
-  });
 
   function findNodeFromHit(hit) {
     let obj = hit.object;
@@ -2540,5 +2547,18 @@
   window.__mlnTopicCenter = function (key) { return topicCenter(key); };
 
   // Start
-  animate();
+  // Vẽ nhãn CHỈ KHI font đã tải — nếu không, canvas label lần load đầu
+  // sẽ dùng font fallback (chữ khác hẳn thiết kế). document.fonts có sẵn
+  // ở mọi trình duyệt hiện đại; fallback timeout phòng khi font lỗi.
+  function whenFontReady(cb) {
+    if (!document.fonts || !document.fonts.ready) { cb(); return; }
+    let done = false;
+    const go = function () { if (!done) { done = true; cb(); } };
+    document.fonts.ready.then(go);
+    setTimeout(go, 2500); // không giữ loader quá fallback 2.5s của index.html
+  }
+  whenFontReady(function () {
+    buildAllNodes();
+    animate(); // chuyển lời gọi animate() về đây
+  });
 })();
