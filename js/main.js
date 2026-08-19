@@ -1546,6 +1546,16 @@
         '<span class="tl-year">' + item.year + '</span>' +
         '<h3>' + item.title + '</h3>' +
         '<p>' + item.text + '</p>';
+      if (item.node) {
+        const link = document.createElement("button");
+        link.className = "rel-link tl-node-link";
+        link.textContent = "→ Xem khái niệm 3D";
+        link.addEventListener("click", function () {
+          timelineModal.classList.add("hidden");
+          selectNodeById(item.node);
+        });
+        div.appendChild(link);
+      }
       tlTrack.appendChild(div);
     });
     // color the active era tab spine accent
@@ -1559,11 +1569,11 @@
   }
   document.getElementById("btn-timeline").addEventListener("click", openTimeline);
   document.getElementById("btn-timeline-mobile").addEventListener("click", openTimeline);
-  function hideTimeline() {
+  function hideTimeline(reset) {
     timelineModal.classList.add("hidden");
-    resetCamera();
+    if (reset !== false) resetCamera();
   }
-  document.getElementById("timeline-close").addEventListener("click", hideTimeline);
+  document.getElementById("timeline-close").addEventListener("click", function () { hideTimeline(); });
   timelineModal.addEventListener("click", function (e) {
     if (e.target === timelineModal) hideTimeline();
   });

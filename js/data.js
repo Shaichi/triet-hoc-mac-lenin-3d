@@ -477,9 +477,9 @@ const TIMELINE = {
         { year: "1820", title: "Ph. Ăngghen ra đời", text: "Friedrich Engels sinh ngày 28/11/1820 tại Barmen, Vương quốc Phổ." },
         { year: "1841", title: "Mác bảo vệ luận án tiến sĩ", text: "Luận án về sự khác nhau giữa triết học tự nhiên của Democrite và Epicure — khởi đầu sự nghiệp triết học." },
         { year: "1844", title: "Bản thảo kinh tế – triết học", text: "Mác phê phán kinh tế học tư sản, bước đầu hình thành quan niệm duy vật lịch sử và vấn đề tha hóa lao động." },
-        { year: "1845", title: "Luận cương về Feuerbach", text: "Khoảng 11 luận cương khẳng định vai trò của thực tiễn cách mạng: “Các nhà triết học mới chỉ giải thích thế giới khác nhau, song vấn đề là cải tạo thế giới.”" },
-        { year: "1846", title: "Hệ tư tưởng Đức", text: "Cùng Ăngghen, Mác phê phán triết học Hêghen và Phoi-ơ-bắc, luận chứng quan niệm duy vật về lịch sử — cuộc cách mạng trong triết học." },
-        { year: "1848", title: "Tuyên ngôn Đảng Cộng sản", text: "Tác phẩm cờ đầu của chủ nghĩa Mác: “Những người vô sản toàn thế giới và những người bị áp bức, hãy đoàn kết lại!”" }
+        { year: "1845", title: "Luận cương về Feuerbach", text: "Khoảng 11 luận cương khẳng định vai trò của thực tiễn cách mạng: “Các nhà triết học mới chỉ giải thích thế giới khác nhau, song vấn đề là cải tạo thế giới.”", node: "cog-practice-basis" },
+        { year: "1846", title: "Hệ tư tưởng Đức", text: "Cùng Ăngghen, Mác phê phán triết học Hêghen và Phoi-ơ-bắc, luận chứng quan niệm duy vật về lịch sử — cuộc cách mạng trong triết học.", node: "hist-sos-form" },
+        { year: "1848", title: "Tuyên ngôn Đảng Cộng sản", text: "Tác phẩm cờ đầu của chủ nghĩa Mác: “Những người vô sản toàn thế giới và những người bị áp bức, hãy đoàn kết lại!”", node: "hist-class-struggle" }
       ]
     },
     {
@@ -488,7 +488,7 @@ const TIMELINE = {
       color: 0xb33b3b,
       items: [
         { year: "1859", title: "Góp phần phê phán khoa kinh tế chính trị", text: "Mác trình bày những tư tưởng cơ bản về kinh tế chính trị, mở đường cho bộ Tư bản." },
-        { year: "1867", title: "Tư bản · Quyển I", text: "Công trình vĩ đại nhất của Mác, phát hiện quy luật giá trị thặng dư — “mạch máu” của chủ nghĩa tư bản." },
+        { year: "1867", title: "Tư bản · Quyển I", text: "Công trình vĩ đại nhất của Mác, phát hiện quy luật giá trị thặng dư — “mạch máu” của chủ nghĩa tư bản.", node: "hist-relations" },
         { year: "1871", title: "Công xã Paris", text: "Cuộc cách mạng vô sản đầu tiên; Mác tổng kết kinh nghiệm đấu tranh giai cấp." },
         { year: "1883", title: "C. Mác qua đời", text: "Mác mất ngày 14/3/1883 tại London; Ăngghen tiếp tục sự nghiệp biên tập, xuất bản các tác phẩm còn dang dở." }
       ]
@@ -501,8 +501,8 @@ const TIMELINE = {
         { year: "1894", title: "Tư bản · Quyển II & III được in", text: "Ăngghen biên tập, người thực hiện di nguyện của Mác." },
         { year: "1895", title: "Ph. Ăngghen qua đời", text: "Người bạn, người đồng chí vĩ đại của Mác qua đời ngày 5/8/1895; ông để lại nhiều công trình triết học quan trọng như “Chống Đuy-rinh”, “Biện chứng của tự nhiên”." },
         { year: "1902", title: "Làm gì?", text: "Lênin luận chứng sự cần thiết của đảng tiên phong cách mạng." },
-        { year: "1909", title: "Chủ nghĩa duy vật và chủ nghĩa kinh nghiệm phê phán", text: "Xuất bản năm 1909 — Lênin bảo vệ và phát triển nền tảng triết học duy vật biện chứng." },
-        { year: "1917", title: "Cách mạng Tháng Mười Nga", text: "Thắng lợi mở ra thời đại mới, chủ nghĩa Mác từ lý luận trở thành hiện thực." },
+        { year: "1909", title: "Chủ nghĩa duy vật và chủ nghĩa kinh nghiệm phê phán", text: "Xuất bản năm 1909 — Lênin bảo vệ và phát triển nền tảng triết học duy vật biện chứng.", node: "material" },
+        { year: "1917", title: "Cách mạng Tháng Mười Nga", text: "Thắng lợi mở ra thời đại mới, chủ nghĩa Mác từ lý luận trở thành hiện thực.", node: "hist-class-struggle" },
         { year: "1920", title: "Vấn đề dân tộc thuộc địa", text: "Lênin phát triển học thuyết cách mạng trong điều kiện các nước thuộc địa — đặt nền móng cho con đường giải phóng dân tộc." },
         { year: "1924", title: "V.I. Lênin qua đời", text: "Chủ nghĩa Mác–Lênin trở thành nền tảng tư tưởng của phong trào cộng sản quốc tế." }
       ]
