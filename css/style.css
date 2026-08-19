@@ -561,6 +561,7 @@ html, body {
 @media (max-width: 860px) { .search-wrap { margin-right: 44px; } }
 
 /* ---------- Legend cụm chủ đề (footer trái) ---------- */
+#progress-count { color: var(--gold); font-size: .72rem; font-weight: 600; margin-left: 8px; }
 #legend { display: flex; gap: 6px; flex-wrap: wrap; pointer-events: auto; }
 .legend-item {
   display: flex; align-items: center; gap: 6px;

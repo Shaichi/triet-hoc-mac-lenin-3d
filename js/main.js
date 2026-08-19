@@ -1147,7 +1147,9 @@
       m.traverse(function (child) {
         if (child.isMesh) clickables.push(child);
       });
+      if (progress.visited && progress.visited[m.userData.node.id]) addVisitedBadge(m);
     });
+    updateProgressUI();
   }
 
   // ---------- Camera fly-to ----------
@@ -1245,6 +1247,39 @@
     }
   }
 
+  // ---------- Tiến độ học (localStorage) ----------
+  const PROGRESS_KEY = "mln-progress-v1";
+  function loadProgress() {
+    try { return JSON.parse(localStorage.getItem(PROGRESS_KEY)) || { visited: {} }; }
+    catch (e) { return { visited: {} }; }
+  }
+  const progress = loadProgress();
+  function markVisited(id) {
+    if (!progress.visited) progress.visited = {};
+    if (progress.visited[id]) return;
+    progress.visited[id] = Date.now();
+    try { localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress)); } catch (e) { /* private mode */ }
+    updateProgressUI();
+    const m = nodeIndex[id];
+    if (m && m.userData.label) addVisitedBadge(m);
+  }
+  function addVisitedBadge(mesh) { // chấm vàng nhỏ góc nhãn
+    if (mesh.userData.visitedBadge) return;
+    const lbl = mesh.userData.label;
+    if (!lbl) return;
+    const dot = new THREE.Sprite(new THREE.SpriteMaterial({ color: 0xe8b54d, transparent: true, opacity: 0.95, depthWrite: false }));
+    dot.scale.set(0.9, 0.9, 1);
+    dot.position.set(lbl.position.x + 6.5, lbl.position.y + 1.4, lbl.position.z);
+    nodeGroup.add(dot);
+    mesh.userData.visitedBadge = dot;
+  }
+  function updateProgressUI() {
+    const n = progress.visited ? Object.keys(progress.visited).length : 0;
+    const el = document.getElementById("progress-count");
+    if (el) el.textContent = "Đã khám phá " + n + "/" + nodes.length + " khái niệm";
+  }
+  window.__mlnProgress = function () { return progress; };
+
   // ---------- UI: info panel ----------
   const infoPanel = document.getElementById("info-panel");
   const infoContent = document.getElementById("info-content");
@@ -1267,6 +1302,7 @@
   }
 
   function showInfo(node) {
+    markVisited(node.id);
     const idx = nodes.indexOf(node);
     const prevN = nodes[(idx - 1 + nodes.length) % nodes.length];
     const nextN = nodes[(idx + 1) % nodes.length];
