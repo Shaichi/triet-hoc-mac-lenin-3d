@@ -22,7 +22,7 @@ const DATA = {
       rule: "",
       body: "<p>Trong triết học Mác–Lênin, <b>vật chất</b> là phạm trù triết học rộng nhất dùng để chỉ <b>thực tại khách quan</b> — cái tồn tại bên ngoài và không phụ thuộc vào ý thức con người. Định nghĩa của Lênin: <i>“Vật chất là một phạm trù triết học dùng để chỉ thực tại khách quan, được đem lại cho con người trong cảm giác, được cảm giác của chúng ta chép lại, chụp lại, phản ánh và tồn tại không lệ thuộc vào cảm giác.”</i></p><p>Vật chất có hai thuộc tính cơ bản: <b>vận động</b> (phương thức tồn tại) và <b>không gian – thời gian</b> (hình thức tồn tại). Vật chất vô hạn, vô tận, vận động vĩnh viễn.</p>",
       example: "Nước, đá, ánh sáng, trường điện từ, xã hội loài người… đều là các dạng tồn tại của vật chất. Dù con người có biết hay không, chúng vẫn tồn tại khách quan.",
-      pos: [19.4, 24, 5.1]
+      pos: [22.0, 18.0, 5.0]
     },
     {
       id: "consciousness",
@@ -33,7 +33,7 @@ const DATA = {
       rule: "",
       body: "<p><b>Ý thức</b> là sản phẩm cao nhất của vật chất, thuộc tính phản ánh của bộ não con người — một dạng vật chất có tổ chức cao. Ý thức phản ánh hiện thực khách quan vào trong đầu óc con người.</p><p>Nguồn gốc của ý thức gồm: nguồn gốc tự nhiên (bộ não người + thế giới khách quan) và nguồn gốc xã hội (lao động + ngôn ngữ). Bản chất của ý thức là <b>hình ảnh chủ quan của thế giới khách quan</b>.</p>",
       example: "Cùng một sự kiện, mỗi người có nhận thức khác nhau — đó là do ý thức mang tính chủ quan, nhưng nội dung của nó là khách quan.",
-      pos: [28.3, 16.1, -5.4]
+      pos: [38.0, 10.0, -5.0]
     },
     {
       id: "motion",
@@ -44,7 +44,7 @@ const DATA = {
       rule: "",
       body: "<p><b>Vận động</b> là mọi sự biến đổi nói chung, là phương thức tồn tại của vật chất. Không có vật chất không vận động và không có vận động ngoài vật chất.</p><p>Có <b>5 hình thức vận động</b> cơ bản: cơ học, vật lý, hóa học, sinh học và xã hội. Hình thức vận động cao bao hàm và xuất phát từ hình thức thấp hơn. Vận động là tuyệt đối, đứng im là tương đối.</p>",
       example: "Trái Đất tự quay (cơ học) → phân tử dao động (vật lý) → phản ứng trao đổi chất (hóa học) → tế bào sinh trưởng (sinh học) → đổi mới phương thức sản xuất (xã hội).",
-      pos: [10.3, 36.8, 5.1]
+      pos: [6.0, 36.0, 5.0]
     },
     {
       id: "space-time",
@@ -55,7 +55,7 @@ const DATA = {
       rule: "",
       body: "<p><b>Không gian</b> và <b>thời gian</b> là hình thức tồn tại của vật chất. Không gian biểu thị tính quảng tính (chỗ đứng, kích thước, kết cấu), thời gian biểu thị tính kế tiếp nhau, tính trường tồn của vật chất.</p><p>Cả hai đều mang tính khách quan, gắn liền với vật chất vận động. Chúng vừa vô hạn vừa có tính tương đối (theo Thuyết tương đối của Einstein).</p>",
       example: "Một sự kiện lịch sử bao giờ cũng xảy ra ở một nơi chốn cụ thể (không gian) và một thời điểm nhất định (thời gian).",
-      pos: [19.3, 36.9, -3.8]
+      pos: [28.0, 42.0, -4.0]
     },
     {
       id: "reflection",
@@ -66,7 +66,7 @@ const DATA = {
       rule: "",
       body: "<p><b>Phản ánh</b> là thuộc tính chung của mọi dạng vật chất: một hệ vật chất này tác động lên hệ vật chất khác để lại “dấu vết” tương ứng. Đây là nền tảng để lý giải nguồn gốc của ý thức.</p><p>Phản ánh phát triển từ thấp đến cao: phản ánh vật lý, hóa học → phản ánh sinh học (tính kích thích, tính cảm ứng, phản xạ) → phản ánh tâm lý động vật → <b>phản ánh ý thức</b> ở con người.</p>",
       example: "Đá in dấu bước chân (phản ánh vật lý), hoa hướng dương quay về phía mặt trời (phản ánh sinh học), con người nhận thức và cải tạo thế giới (phản ánh ý thức).",
-      pos: [-9.4, 42.6, 7.4]
+      pos: [-14.0, 50.0, 6.0]
     }
   ],
 
@@ -82,7 +82,7 @@ const DATA = {
       rule: "Hình thức lịch sử 1",
       body: "<p>Phép biện chứng xuất hiện ngay từ triết học cổ đại phương Đông và phương Hy Lạp, khi con người nhìn thế giới trong <b>sự vận động và liên hệ</b>, nhưng chủ yếu bằng <b>trực quan, chất phác</b>, chưa có chứng minh khoa học.</p><p>Những đại diện tiêu biểu: Hêraclit với tư tưởng “mọi vật đều trôi đi”, sự thống nhất và đấu tranh của các mặt đối lập; triết học Phật giáo với cái nhìn về vô thường và nhân duyên.</p>",
       example: "Câu nói nổi tiếng của Hêraclit: “Không ai tắm hai lần trên cùng một dòng sông” — mọi sự vật đều không ngừng biến đổi.",
-      pos: [9.7, -42.2, 7.5]
+      pos: [2.0, -36.0, 6.0]
     },
     {
       id: "dialect-idealist",
@@ -93,7 +93,7 @@ const DATA = {
       rule: "Hình thức lịch sử 2",
       body: "<p>Phép biện chứng duy tâm cổ điển Đức, đỉnh cao là hệ thống của <b>Hêghen</b> (1770–1831), lần đầu tiên trình bày toàn bộ giới tự nhiên, lịch sử và tư duy dưới dạng một <b>quá trình vận động, phát triển không ngừng</b>, với các quy luật và phạm trù được hệ thống hóa.</p><p>Hạn chế căn bản: đó là biện chứng của <b>ý niệm tuyệt đối</b> — tư duy sinh ra hiện thực, tức biện chứng “đội lộn ngược”. Mác và Ăngghen đã kế thừa “hạt nhân hợp lý” và cải tạo nó trên nền tảng duy vật.</p>",
       example: "Hêghen xây dựng hệ thống quy luật lượng – chất, phủ định của phủ định… nhưng coi chúng là quy luật vận động của “tinh thần” chứ không phải của thế giới vật chất.",
-      pos: [13.6, -48.7, -5.8]
+      pos: [18.0, -58.0, -5.0]
     },
     {
       id: "dialect-materialist-birth",
@@ -104,7 +104,7 @@ const DATA = {
       rule: "Hình thức lịch sử 3 · Đỉnh cao",
       body: "<p><b>Phép biện chứng duy vật</b> do C. Mác và Ph. Ăngghen sáng lập, là hình thức cao nhất của phép biện chứng: kế thừa “hạt nhân hợp lý” của Hêghen nhưng đặt trên nền tảng <b>duy vật</b> — biện chứng của bản thân thế giới vật chất, không phải của ý niệm.</p><p>Sự ra đời của nó là một <b>cách mạng trong triết học</b>, trở thành phương pháp luận khoa học cho nhận thức và cải tạo thế giới.</p>",
       example: "Mác “lật ngược” phép biện chứng của Hêghen: không phải ý niệm quyết định hiện thực, mà chính hiện thực vật chất là nguồn gốc của mọi sự vận động và phát triển.",
-      pos: [48.2, -27.4, 4.5]
+      pos: [48.0, -28.0, 4.5]
     }
   ],
 
@@ -130,7 +130,7 @@ const DATA = {
       rule: "Nguyên lý của CNDVBC",
       body: "<p><b>Thế giới thống nhất ở tính vật chất.</b> Thế giới này chỉ có một bản chất duy nhất là vật chất; thế giới vật chất là cái có trước, ý thức là cái có sau, thuộc tính của dạng vật chất có tổ chức cao.</p><p>Từ đó suy ra: mọi hiện tượng đều có nguyên nhân vật chất; con người có thể nhận thức và cải tạo thế giới.</p>",
       example: "Từ vũ trụ bao la, sự sống, cho đến tư duy — tất cả đều biểu hiện của vật chất vận động. Không có “thế giới tinh thần” tách rời vật chất.",
-      pos: [-47.2, 28, 6.2]
+      pos: [-36.0, 34.0, 6.0]
     },
     {
       id: "principle-connection",
@@ -141,7 +141,7 @@ const DATA = {
       rule: "Nguyên lý 1",
       body: "<p>Mọi sự vật, hiện tượng trong thế giới <b>đều liên hệ, tác động, chuyển hóa lẫn nhau</b>. Các mối liên hệ mang tính <b>khách quan, phổ biến, đa dạng</b>.</p><p>Yêu cầu phương pháp: <b>quan điểm toàn diện</b> (xem xét mọi mặt, mọi mối liên hệ), chống quan điểm phiến diện, một chiều.</p>",
       example: "Giá dầu tăng → chi phí vận tải tăng → giá hàng hóa tăng → lạm phát → lãi suất điều chỉnh… Một sự kiện kéo theo chuỗi hệ quả.",
-      pos: [-55.7, 26.3, -4.4]
+      pos: [-60.0, 18.0, -4.0]
     },
     {
       id: "principle-development",
@@ -152,7 +152,7 @@ const DATA = {
       rule: "Nguyên lý 2",
       body: "<p><b>Phát triển</b> là vận động theo khuynh hướng đi lên: cái mới ra đời, cái cũ mất đi, sự vật chuyển từ thấp đến cao, từ kém hoàn thiện đến hoàn thiện hơn.</p><p>Phát triển là <b>quá trình khách quan, phổ biến</b>. Yêu cầu phương pháp: <b>quan điểm phát triển</b> — ủng hộ cái mới, nhìn xa trông rộng, chống tư tưởng bảo thủ trì trệ.</p>",
       example: "Nền kinh tế nông nghiệp → công nghiệp → kinh tế tri thức. Mỗi giai đoạn là bước phát triển mới từ giai đoạn trước.",
-      pos: [-64.6, -20.1, 3.3]
+      pos: [-68.0, -22.0, 4.0]
     },
     // ========== CẶP PHẠM TRÙ ==========
     {
@@ -164,7 +164,7 @@ const DATA = {
       rule: "Cặp phạm trù",
       body: "<p><b>Cái riêng</b> là phạm trù chỉ một sự vật, hiện tượng nhất định; <b>cái chung</b> là phạm trù chỉ những mặt, thuộc tính giống nhau ở nhiều sự vật.</p><p>Quan hệ: cái chung tồn tại trong cái riêng, thông qua cái riêng mà biểu hiện; cái riêng bao hàm cái chung. Không có cái chung thuần túy tách rời cái riêng.</p>",
       example: "“Cá” (cái chung) chỉ tồn tại qua từng con cá cụ thể (cái riêng). Mỗi con cá vừa có đặc điểm riêng, vừa mang thuộc tính chung của loài.",
-      pos: [66.9, 17.3, 5.8]
+      pos: [68.0, 16.0, 5.5]
     },
     {
       id: "cat-essence-phenomenon",
@@ -175,7 +175,7 @@ const DATA = {
       rule: "Cặp phạm trù",
       body: "<p><b>Bản chất</b> là cái tất yếu, quy định sự vật; <b>hiện tượng</b> là biểu hiện ra bên ngoài của bản chất.</p><p>Bản chất được bộc lộ qua hiện tượng nhưng không đồng nhất với hiện tượng. Nhận thức phải đi sâu từ hiện tượng đến bản chất, từ bản chất ít sâu đến bản chất sâu hơn.</p>",
       example: "Giá cả hàng hóa dao động quanh giá trị (bản chất) do quan hệ cung – cầu (hiện tượng). Nhìn giá cả chưa đủ, phải hiểu giá trị và quy luật giá trị.",
-      pos: [66.4, 34.9, -2.5]
+      pos: [68.0, 40.0, -3.0]
     },
     {
       id: "cat-necessity-contingency",
@@ -186,7 +186,7 @@ const DATA = {
       rule: "Cặp phạm trù",
       body: "<p><b>Tất nhiên</b> là cái do những nguyên nhân cơ bản quyết định, tất yếu xảy ra đúng như thế; <b>ngẫu nhiên</b> là cái không do nguyên nhân cơ bản quyết định, có thể xảy ra hay không.</p><p>Ngẫu nhiên là hình thức biểu hiện của tất nhiên; tất nhiên thông qua vô số ngẫu nhiên mà bộc lộ. Cần dựa vào tất nhiên, đồng thời chuẩn bị cho ngẫu nhiên.</p>",
       example: "Trong gieo hạt, hạt nảy mầm thành cây là tất nhiên; con nào bị sâu ăn, mưa lớn cuốn đi là ngẫu nhiên.",
-      pos: [33.1, 73.7, 5.5]
+      pos: [34.0, 76.0, 5.5]
     },
     {
       id: "cat-cause-effect",
@@ -198,7 +198,7 @@ const DATA = {
       related: ["cat-necessity-contingency", "cat-essence-phenomenon"],
       body: "<p><b>Nguyên nhân</b> là phạm trù chỉ sự tác động lẫn nhau giữa các mặt trong một sự vật gây ra biến đổi nhất định; <b>kết quả</b> là những biến đổi xuất hiện do tác động đó.</p><p>Nguyên nhân sinh ra kết quả, kết quả tác động trở lại nguyên nhân. Cùng một nguyên nhân có thể gây nhiều kết quả và ngược lại.</p>",
       example: "Bỏ bê học tập (nguyên nhân) → thi trượt (kết quả). Thi trượt (giờ là nguyên nhân) → động lực học lại chăm chỉ hơn (kết quả mới).",
-      pos: [-34.4, -72.7, 4.6]
+      pos: [-48.0, -62.0, 5.0]
     },
     {
       id: "cat-content-form",
@@ -209,7 +209,7 @@ const DATA = {
       rule: "Cặp phạm trù",
       body: "<p><b>Nội dung</b> là tổng hợp các mặt, các quá trình tạo nên sự vật; <b>hình thức</b> là phương thức tồn tại, biểu hiện của nội dung.</p><p>Nội dung quyết định hình thức; hình thức tác động trở lại nội dung. Hình thức thường chậm hơn nội dung, đến lúc không phù hợp thì phải thay đổi.</p>",
       example: "Một cuốn tiểu thuyết: câu chuyện (nội dung) quyết định cách kể (hình thức). Nếu nội dung đổi mới mà hình thức cũ, người đọc sẽ chán.",
-      pos: [-36.1, -74.8, -3.6]
+      pos: [-24.0, -78.0, -4.0]
     },
     {
       id: "cat-possibility-reality",
@@ -220,7 +220,7 @@ const DATA = {
       rule: "Cặp phạm trù",
       body: "<p><b>Khả năng</b> là cái hiện chưa có nhưng sẽ xuất hiện trong tương lai nếu điều kiện thích hợp; <b>hiện thực</b> là cái hiện đang tồn tại, đang là.</p><p>Khả năng và hiện thực chuyển hóa cho nhau. Nhận thức phải dựa trên hiện thực, đồng thời tính tới các khả năng và tạo điều kiện biến khả năng thành hiện thực.</p>",
       example: "Hạt giống (khả năng) → gặp đất tốt, nước, ánh sáng → mầm cây (hiện thực). Hiện thực mới lại mở ra khả năng ra hoa kết trái.",
-      pos: [-5.8, -85.5, 3.7]
+      pos: [-18.0, -96.0, 4.0]
     },
     // ========== QUY LUẬT (3 quy luật cơ bản) ==========
     {
@@ -233,7 +233,7 @@ const DATA = {
       body: "<p>Mọi sự vật đều tồn tại những <b>mặt đối lập</b> vừa thống nhất vừa đấu tranh với nhau. <b>Thống nhất</b> là sự liên hệ, quy định, gắn bó lẫn nhau; <b>đấu tranh</b> là sự bài trừ, phủ định lẫn nhau.</p><p>Đấu tranh của các mặt đối lập là <b>nguồn gốc, động lực của sự vận động và phát triển</b>. Quy luật này là <i>“hạt nhân”</i> của phép biện chứng duy vật.</p><p>Ý nghĩa phương pháp: phải nhận thức và giải quyết mâu thuẫn, phân biệt mâu thuẫn cơ bản và không cơ bản, mâu thuẫn chủ yếu và thứ yếu, mặt chủ yếu và thứ yếu.</p>",
       example: "Trong một tế bào luôn diễn ra đồng hóa (tổng hợp) và dị hóa (phân giải) — hai mặt đối lập đấu tranh nhau, là nguồn sống của tế bào. Giai cấp công nhân và tư sản trong xã hội tư bản cũng vậy.",
       sim: "contradiction",
-      pos: [-6.6, -89, -4.8]
+      pos: [6.0, -88.0, -5.0]
     },
     {
       id: "law-quantity-quality",
@@ -245,7 +245,7 @@ const DATA = {
       body: "<p><b>Lượng</b> là tính quy định khách quan biểu thị quy mô, tốc độ, nhịp điệu; <b>chất</b> là tính quy định khách quan biểu thị tính quy định, cấu trúc của sự vật, cái mà nhờ đó sự vật là nó chứ không phải cái khác.</p><p>Quy luật: <b>lượng đổi → chất đổi</b>. Lượng tích lũy dần đến điểm nút (độ), vượt điểm nút gây bước nhảy làm thay đổi về chất; chất mới lại mở ra lượng mới.</p><p>Vận dụng: tích lũy dần từng ngày, chuẩn bị cho bước nhảy; tránh cả tư tưởng nóng vội và trì trệ bảo thủ.</p>",
       example: "Nước: tăng dần nhiệt độ (lượng) từ 0°C đến 100°C (điểm nút) → bước nhảy → nước sôi thành hơi (chất mới). Học tập mỗi ngày một ít (lượng) đủ lâu sẽ tạo nên kiến thức mới (chất).",
       sim: "quantity-quality",
-      pos: [30.8, -87.1, 4.3]
+      pos: [28.0, -94.0, 4.5]
     },
     {
       id: "law-negation",
@@ -257,7 +257,7 @@ const DATA = {
       body: "<p><b>Phủ định biện chứng</b> không phải là xóa bỏ hoàn toàn mà là sự phủ định gắn với sự kế thừa (vừa phủ định vừa giữ lại cái hợp lý).</p><p>Quy luật: quá trình phát triển đi theo đường <b>“xoáy ốc”</b> — khẳng định → phủ định → phủ định của phủ định, kết thúc bằng một trình độ cao hơn. Cái mới ra đời nhưng vẫn giữ lại cái tích cực của cái cũ.</p><p>Vận dụng: kế thừa có phê phán; không phủ định sạch trơn lịch sử, cũng không bảo thủ nguyên xi.</p>",
       example: "Hạt lúa → (phủ định) → cây lúa → (phủ định của phủ định) → hạt lúa mới. Hạt mới nhiều hơn, tốt hơn hạt ban đầu — sự phát triển như đường xoáy ốc đi lên.",
       sim: "negation",
-      pos: [34.7, -86.8, -5]
+      pos: [50.0, -76.0, -5.0]
     }
   ],
 
@@ -277,7 +277,7 @@ const DATA = {
       rule: "",
       body: "<p><b>Thực tiễn</b> là toàn bộ hoạt động vật chất có mục đích, mang tính lịch sử – xã hội của con người nhằm cải tạo tự nhiên và xã hội.</p><p>Thực tiễn đóng vai trò là <b>cơ sở</b> (nhận thức bắt nguồn từ thực tiễn), <b>động lực</b> (thực tiễn đặt ra nhu cầu), <b>mục đích</b> và <b>tiêu chuẩn chân lý</b> của nhận thức.</p>",
       example: "Muốn biết quả ớt cay, phải nếm; muốn biết bơi, phải xuống nước. “Học đi đôi với hành” chính là tinh thần này.",
-      pos: [-49.6, 78.5, 5]
+      pos: [-40.0, 68.0, 5.0]
     },
     {
       id: "cog-process",
@@ -288,7 +288,7 @@ const DATA = {
       rule: "",
       body: "<p>Nhận thức đi từ <b>cảm tính</b> đến <b>lý tính</b>, rồi từ nhận thức lý tính quay về <b>kiểm nghiệm bằng thực tiễn</b>. Đó là chu trình: <i>thực tiễn → nhận thức → thực tiễn mới → nhận thức sâu hơn…</i></p><p>Nhận thức cảm tính là giai đoạn trực quan, sinh động; nhận thức lý tính là giai đoạn trừu tượng, khái quát, nắm bản chất. Hai giai đoạn gắn bó, chuyển hóa lẫn nhau.</p>",
       example: "Thấy trời nhiều mây đen, lạnh (cảm tính) → nhận ra sắp mưa (lý tính) → ra ngoài kiểm tra (thực tiễn) → xác nhận hoặc điều chỉnh nhận thức.",
-      pos: [-51.5, 81.4, -3.4]
+      pos: [-64.0, 88.0, -4.0]
     },
     {
       id: "cog-sensuous",
@@ -300,7 +300,7 @@ const DATA = {
       related: ["cog-rational", "cog-process"],
       body: "<p>Nhận thức cảm tính là giai đoạn nhận thức <b>trực quan, sinh động</b>: con người tiếp xúc trực tiếp với sự vật qua cảm giác, tri giác, biểu tượng.</p><p>Nó phản ánh những mặt bên ngoài, từng thuộc tính riêng lẻ của sự vật. Đây là cơ sở, là điểm xuất phát của nhận thức nhưng chưa nắm được bản chất.</p>",
       example: "Nhìn thấy màu đỏ, ngửi thấy mùi thơm, sờ thấy mát lạnh của một quả táo — đó là những hình ảnh cảm tính.",
-      pos: [-83.8, 55.4, 4.7]
+      pos: [-76.0, 46.0, 5.0]
     },
     {
       id: "cog-rational",
@@ -312,7 +312,7 @@ const DATA = {
       related: ["cog-sensuous", "cog-return-practice"],
       body: "<p>Nhận thức lý tính là giai đoạn nhận thức <b>trừu tượng, khái quát</b>: dựa trên tài liệu cảm tính mà phân tích, tổng hợp, khái niệm hóa, phán đoán, suy lý.</p><p>Nhận thức lý tính nắm được bản chất, quy luật, tính tất yếu của sự vật — cao hơn hẳn cảm tính nhưng không tách rời cảm tính.</p>",
       example: "Sau khi quan sát nhiều quả táo, con người khái quát: “Táo là loại quả giàu chất xơ” — đó là nhận thức lý tính.",
-      pos: [-87.6, 55.3, -3.2]
+      pos: [-98.0, 62.0, -4.0]
     },
     {
       id: "cog-return-practice",
@@ -323,7 +323,7 @@ const DATA = {
       rule: "",
       body: "<p>Nhận thức lý tính <b>phải quay về thực tiễn</b> để kiểm nghiệm, vận dụng và phát triển. Đây là giai đoạn quan trọng nhất: nhận thức mà không áp dụng thì vô nghĩa.</p><p>Thực tiễn là <b>tiêu chuẩn khách quan duy nhất của chân lý</b>. Chân lý là tri thức phù hợp với hiện thực và được thực tiễn kiểm nghiệm.</p>",
       example: "Lý thuyết bơi trên sách chỉ đúng khi bạn xuống nước và bơi được. Thành công hay thất bại trong thực tiễn là thước đo chân lý.",
-      pos: [-103.7, 17.6, 3.3]
+      pos: [-108.0, 16.0, 3.5]
     }
   ],
 
@@ -343,7 +343,7 @@ const DATA = {
       rule: "",
       body: "<p><b>Lực lượng sản xuất</b> là toàn bộ những năng lực thực tiễn của con người trong quá trình sản xuất ra của cải vật chất, gồm <b>người lao động</b> (đóng vai trò quyết định) và <b>tư liệu sản xuất</b> (công cụ lao động, đối tượng lao động).</p><p>Lực lượng sản xuất là nền tảng của xã hội; công cụ lao động là thước đo trình độ chinh phục tự nhiên của con người.</p>",
       example: "Từ cuốc, cày (nông nghiệp) → máy hơi nước (cách mạng công nghiệp) → robot, AI (cách mạng 4.0) — trình độ công cụ thay đổi toàn bộ xã hội.",
-      pos: [104.6, -14.9, 5]
+      pos: [96.0, -24.0, 5.0]
     },
     {
       id: "hist-relations",
@@ -354,7 +354,7 @@ const DATA = {
       rule: "",
       body: "<p><b>Quan hệ sản xuất</b> là quan hệ giữa người với người trong quá trình sản xuất, gồm: quan hệ <b>sở hữu</b> tư liệu sản xuất (cơ bản nhất), quan hệ <b>tổ chức quản lý</b> và quan hệ <b>phân phối</b> sản phẩm.</p><p>Quan hệ sản xuất phù hợp với trình độ lực lượng sản xuất sẽ thúc đẩy phát triển; khi không phù hợp, nó trở thành xiềng xích và phải thay đổi.</p>",
       example: "Lực lượng sản xuất công nghiệp hóa cao đòi hỏi quan hệ sản xuất cởi mở, phân phối công bằng — nếu quan hệ cũ kìm hãm, xã hội sẽ diễn ra biến đổi.",
-      pos: [108.3, -13.8, -3.8]
+      pos: [116.0, -6.0, -4.0]
     },
     {
       id: "hist-base-superstructure",
@@ -365,7 +365,7 @@ const DATA = {
       rule: "",
       body: "<p><b>Cơ sở hạ tầng</b> là toàn bộ quan hệ sản xuất hợp thành kết cấu kinh tế của xã hội; <b>kiến trúc thượng tầng</b> là toàn bộ những quan điểm, thiết chế chính trị – pháp lý… xây dựng trên cơ sở đó.</p><p>Quan hệ: cơ sở hạ tầng <b>quyết định</b> kiến trúc thượng tầng; kiến trúc thượng tầng <b>tác động trở lại</b> cơ sở hạ tầng.</p>",
       example: "Kinh tế thị trường phát triển (hạ tầng) kéo theo hệ thống pháp luật, nhà nước pháp quyền hiện đại (thượng tầng) được đổi mới cho phù hợp.",
-      pos: [108.4, 28.8, 2.1]
+      pos: [104.0, 18.0, 3.0]
     },
     {
       id: "hist-sos-form",
@@ -376,7 +376,7 @@ const DATA = {
       rule: "",
       body: "<p><b>Hình thái kinh tế – xã hội</b> là một phạm trù chỉ xã hội ở từng giai đoạn phát triển nhất định, là hệ thống thống nhất giữa lực lượng sản xuất, quan hệ sản xuất và kiến trúc thượng tầng.</p><p>Sự phát triển của các hình thái là một <b>quá trình lịch sử – tự nhiên</b>, tất yếu đi theo quy luật: cộng sản nguyên thủy → chiếm hữu nô lệ → phong kiến → tư bản → cộng sản chủ nghĩa.</p>",
       example: "Việc chuyển từ xã hội phong kiến sang tư bản không phải ngẫu nhiên, mà là kết quả tất yếu của sự phát triển lực lượng sản xuất và đấu tranh giai cấp.",
-      pos: [110.7, 32.9, -4.2]
+      pos: [124.0, 40.0, -4.5]
     },
     {
       id: "hist-class-struggle",
@@ -387,7 +387,7 @@ const DATA = {
       rule: "",
       body: "<p><b>Giai cấp</b> là những tập đoàn người có địa vị khác nhau trong hệ thống sản xuất, do quan hệ với tư liệu sản xuất quy định. <b>Đấu tranh giai cấp</b> là cuộc đấu tranh giữa các giai cấp đối kháng.</p><p>Đấu tranh giai cấp là một trong những <b>động lực phát triển của xã hội có giai cấp</b>; đỉnh cao của nó là cách mạng xã hội — thay đổi quan hệ sản xuất cũ bằng quan hệ sản xuất mới.</p>",
       example: "Cuộc Cách mạng Tháng Mười Nga 1917 là đỉnh cao của đấu tranh giai cấp, thay đổi toàn bộ quan hệ sản xuất và kiến trúc thượng tầng nước Nga.",
-      pos: [93.8, 71.7, 2.9]
+      pos: [86.0, 60.0, 3.5]
     },
     {
       id: "hist-cmv",
@@ -398,7 +398,7 @@ const DATA = {
       rule: "",
       body: "<p><b>Con người</b> là thực thể thống nhất giữa mặt tự nhiên và mặt xã hội, vừa là sản phẩm vừa là chủ thể của lịch sử.</p><p><b>Quần chúng nhân dân</b> — những người lao động sản xuất — là <b>chủ thể sáng tạo lịch sử</b>: quyết định sự phát triển của lực lượng sản xuất, của văn hóa và các cuộc cách mạng. Cá nhân kiệt xuất có vai trò quan trọng nhưng chỉ thúc đẩy trong khuôn khổ quần chúng quyết định.</p>",
       example: "Kim tự tháp Ai Cập, Vạn Lý Trường Thành, những cuộc đổi mới vĩ đại — đều do hàng triệu người lao động làm nên, không phải của riêng cá nhân nào.",
-      pos: [91.1, 76.6, -3.1]
+      pos: [106.0, 84.0, -3.5]
     }
   ]
 };
