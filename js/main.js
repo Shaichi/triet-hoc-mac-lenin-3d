@@ -7,6 +7,7 @@
   "use strict";
 
   // ---------- Constants ----------
+  const REDUCED = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const COLORS = {
     red: 0xe0222b,
     redDark: 0x8a151b,
@@ -1299,7 +1300,7 @@
     const camDir = up.clone().add(dir.multiplyScalar(0.4)).normalize();
     const viewDist = m.userData.isLaw ? 26 : 21;
     flyTo(target.clone().add(camDir.multiplyScalar(viewDist)), target);
-    burstAt(target, m.userData.color);
+    if (!REDUCED) burstAt(target, m.userData.color);
   }
 
   function showInfo(node) {
@@ -2505,100 +2506,104 @@
       controls.update();
     }
 
-    // core rotation
-    coreRing.rotation.z += 0.004;
-    coreRing2.rotation.y += 0.004;
-    coreSphere.rotation.y += 0.002;
+    if (!REDUCED) {
+      // core rotation
+      coreRing.rotation.z += 0.004;
+      coreRing2.rotation.y += 0.004;
+      coreSphere.rotation.y += 0.002;
 
-    // orbiters
-    orbiterLights.forEach(function (o) {
-      o.userData.angle += o.userData.speed;
-      o.position.x = Math.cos(o.userData.angle) * o.userData.radius;
-      o.position.z = Math.sin(o.userData.angle) * o.userData.radius;
-    });
+      // orbiters
+      orbiterLights.forEach(function (o) {
+        o.userData.angle += o.userData.speed;
+        o.position.x = Math.cos(o.userData.angle) * o.userData.radius;
+        o.position.z = Math.sin(o.userData.angle) * o.userData.radius;
+      });
+    }
 
     // node gentle bob + rotation + hover glow follows node
     meshes.forEach(function (m, i) {
       const t = Date.now() * 0.001;
-      m.rotation.x = Math.sin(t * 0.4 + i) * 0.05;
-      m.rotation.y = t * 0.04 + i * 0.01;   // much slower self-rotation
-      // model-specific internal motion (chuyển động riêng của từng hình thù)
-      const tNow = Date.now() * 0.001;
-      m.traverse(function (child) {
-        if (child.userData.electronRing) {                       // electron quanh mạng vật chất
-          child.userData.orbit += 0.02;
-          const a = child.userData.orbit;
-          const r = child.userData.ringR;
-          const p = new THREE.Vector3(Math.cos(a) * r, Math.sin(a) * r, 0);
-          p.applyEuler(new THREE.Euler(child.userData.ringTilt, 0, 0));
-          child.position.copy(p);
-        }
-        if (child.userData.isFlame) {                            // ngọn lửa ý thức lay động
-          child.scale.y = 1 + Math.sin(tNow * 4.2 + child.position.y) * 0.09;
-        }
-        if (child.userData.isGear) child.rotation.z += 0.02;      // bánh răng quay
-        if (child.userData.isEssence) {                           // nhân phát sáng nhấp nháy
-          child.rotation.y += 0.015;
-          if (child.material && child.material.emissiveIntensity !== undefined) {
-            child.material.emissiveIntensity = 0.9 + Math.sin(tNow * 3 + child.id * 0.7) * 0.3;
+      if (!REDUCED) {
+        m.rotation.x = Math.sin(t * 0.4 + i) * 0.05;
+        m.rotation.y = t * 0.04 + i * 0.01;   // much slower self-rotation
+        // model-specific internal motion (chuyển động riêng của từng hình thù)
+        const tNow = Date.now() * 0.001;
+        m.traverse(function (child) {
+          if (child.userData.electronRing) {                       // electron quanh mạng vật chất
+            child.userData.orbit += 0.02;
+            const a = child.userData.orbit;
+            const r = child.userData.ringR;
+            const p = new THREE.Vector3(Math.cos(a) * r, Math.sin(a) * r, 0);
+            p.applyEuler(new THREE.Euler(child.userData.ringTilt, 0, 0));
+            child.position.copy(p);
           }
-        }
-        if (child.userData.isPhenomenon) child.rotation.y -= 0.01; // lớp hiện tượng xoay ngược
-        if (child.userData.isContent) {                            // nội dung phập phồng trong khung
-          const s = 1 + Math.sin(tNow * 2.2) * 0.08;
-          child.scale.set(s, s, s);
-        }
-        if (child.userData.possibilityTravel) {                    // chấm sáng khả năng → hiện thực
-          const p = (tNow * 0.35) % 1.3;
-          child.position.x = -3.6 * 0.95 + p * (3.6 * 1.9);
-          child.material.opacity = p > 1 ? 1 - (p - 1) / 0.3 : 1;
-        }
-        if (child.userData.isHot) {                                // mặt đối lập "nóng" nhấp nháy
-          if (child.material && child.material.emissiveIntensity !== undefined) {
-            child.material.emissiveIntensity = 0.75 + Math.sin(tNow * 5) * 0.35;
+          if (child.userData.isFlame) {                            // ngọn lửa ý thức lay động
+            child.scale.y = 1 + Math.sin(tNow * 4.2 + child.position.y) * 0.09;
           }
+          if (child.userData.isGear) child.rotation.z += 0.02;      // bánh răng quay
+          if (child.userData.isEssence) {                           // nhân phát sáng nhấp nháy
+            child.rotation.y += 0.015;
+            if (child.material && child.material.emissiveIntensity !== undefined) {
+              child.material.emissiveIntensity = 0.9 + Math.sin(tNow * 3 + child.id * 0.7) * 0.3;
+            }
+          }
+          if (child.userData.isPhenomenon) child.rotation.y -= 0.01; // lớp hiện tượng xoay ngược
+          if (child.userData.isContent) {                            // nội dung phập phồng trong khung
+            const s = 1 + Math.sin(tNow * 2.2) * 0.08;
+            child.scale.set(s, s, s);
+          }
+          if (child.userData.possibilityTravel) {                    // chấm sáng khả năng → hiện thực
+            const p = (tNow * 0.35) % 1.3;
+            child.position.x = -3.6 * 0.95 + p * (3.6 * 1.9);
+            child.material.opacity = p > 1 ? 1 - (p - 1) / 0.3 : 1;
+          }
+          if (child.userData.isHot) {                                // mặt đối lập "nóng" nhấp nháy
+            if (child.material && child.material.emissiveIntensity !== undefined) {
+              child.material.emissiveIntensity = 0.75 + Math.sin(tNow * 5) * 0.35;
+            }
+          }
+          if (child.userData.isFill) {                               // cột lượng dâng lên rồi hạ xuống
+            const p = (tNow * 0.22) % 1;
+            const h = 0.3 + p * 6.9;
+            child.scale.y = h;
+            child.position.y = child.userData.baseY + h / 2;
+          }
+          if (child.userData.isThreshold) {                          // vòng chất bùng sáng khi lượng chạm ngưỡng
+            const p = (tNow * 0.22) % 1;
+            const near = Math.max(0, 1 - Math.abs(p - 0.92) / 0.12);
+            child.material.emissiveIntensity = 0.4 + near * 1.4;
+            const s = 1 + near * 0.12;
+            child.scale.set(s, s, s);
+          }
+          if (child.userData.negLayer) {                             // lớp phủ định nở ra kế tiếp nhau
+            const idx = child.userData.negIdx;
+            const p = Math.max(0, Math.min(1, ((tNow * 0.18) - idx * 0.22 + 10) % 1.4 / 0.5));
+            const s = 0.85 + p * 0.2;
+            child.scale.set(s, s, s);
+            child.rotation.y += 0.004 * (idx + 1);
+          }
+          if (child.userData.isIris) {                               // con mắt liếc qua lại
+            child.position.x = Math.sin(tNow * 1.4) * 0.7;
+          }
+          if (child.userData.isClash) {                              // hai giai cấp áp sát nhau rồi lùi ra
+            const baseX = child.position.x > 0 ? 1 : -1;
+            child.position.x = baseX * (3.6 * 1.0 - Math.abs(Math.sin(tNow * 1.6)) * 0.55);
+          }
+          if (child.userData.isFlash) {                              // tia lửa giữa hai khối
+            child.material.emissiveIntensity = 0.6 + Math.abs(Math.sin(tNow * 1.6)) * 1.6;
+            const s = 0.7 + Math.abs(Math.sin(tNow * 1.6)) * 0.6;
+            child.scale.set(s, s, s);
+            child.rotation.y += 0.05;
+          }
+        });
+        if (m.userData.hoverGlow) {
+          m.userData.hoverGlow.position.copy(m.position);
+          m.userData.hoverGlow.material.opacity = 0.5 + Math.sin(t * 3 + i) * 0.2;
         }
-        if (child.userData.isFill) {                               // cột lượng dâng lên rồi hạ xuống
-          const p = (tNow * 0.22) % 1;
-          const h = 0.3 + p * 6.9;
-          child.scale.y = h;
-          child.position.y = child.userData.baseY + h / 2;
+        if (m.userData.ambientGlow) {
+          m.userData.ambientGlow.position.copy(m.position);
+          m.userData.ambientGlow.material.opacity = 0.32 + Math.sin(t * 1.6 + i) * 0.12;
         }
-        if (child.userData.isThreshold) {                          // vòng chất bùng sáng khi lượng chạm ngưỡng
-          const p = (tNow * 0.22) % 1;
-          const near = Math.max(0, 1 - Math.abs(p - 0.92) / 0.12);
-          child.material.emissiveIntensity = 0.4 + near * 1.4;
-          const s = 1 + near * 0.12;
-          child.scale.set(s, s, s);
-        }
-        if (child.userData.negLayer) {                             // lớp phủ định nở ra kế tiếp nhau
-          const idx = child.userData.negIdx;
-          const p = Math.max(0, Math.min(1, ((tNow * 0.18) - idx * 0.22 + 10) % 1.4 / 0.5));
-          const s = 0.85 + p * 0.2;
-          child.scale.set(s, s, s);
-          child.rotation.y += 0.004 * (idx + 1);
-        }
-        if (child.userData.isIris) {                               // con mắt liếc qua lại
-          child.position.x = Math.sin(tNow * 1.4) * 0.7;
-        }
-        if (child.userData.isClash) {                              // hai giai cấp áp sát nhau rồi lùi ra
-          const baseX = child.position.x > 0 ? 1 : -1;
-          child.position.x = baseX * (3.6 * 1.0 - Math.abs(Math.sin(tNow * 1.6)) * 0.55);
-        }
-        if (child.userData.isFlash) {                              // tia lửa giữa hai khối
-          child.material.emissiveIntensity = 0.6 + Math.abs(Math.sin(tNow * 1.6)) * 1.6;
-          const s = 0.7 + Math.abs(Math.sin(tNow * 1.6)) * 0.6;
-          child.scale.set(s, s, s);
-          child.rotation.y += 0.05;
-        }
-      });
-      if (m.userData.hoverGlow) {
-        m.userData.hoverGlow.position.copy(m.position);
-        m.userData.hoverGlow.material.opacity = 0.5 + Math.sin(t * 3 + i) * 0.2;
-      }
-      if (m.userData.ambientGlow) {
-        m.userData.ambientGlow.position.copy(m.position);
-        m.userData.ambientGlow.material.opacity = 0.32 + Math.sin(t * 1.6 + i) * 0.12;
       }
 
       // Fade label based on distance and screen-edge visibility
@@ -2618,39 +2623,41 @@
     });
     labels.forEach(function (l) { l.material.rotation = 0; });
 
-    // floating golden dust: gentle rotation as a whole cloud
-    dust.rotation.y += 0.00035;
-    dust.rotation.x = Math.sin(Date.now() * 0.0001) * 0.03;
+    if (!REDUCED) {
+      // floating golden dust: gentle rotation as a whole cloud
+      dust.rotation.y += 0.00035;
+      dust.rotation.x = Math.sin(Date.now() * 0.0001) * 0.03;
 
-    // lấp lánh sao: xoay sprite điểm ảnh chậm → các sao "nháy" đổi độ sáng;
-    // tinh vân trôi cực chậm cho cảm giác không gian sống
-    twinkleMat.map.rotation += 0.0009;
-    for (let ni = 0; ni < nebSprites.length; ni++) {
-      nebSprites[ni].material.rotation += nebulae[ni].rot;
-    }
-
-    // update click bursts (particles + shockwaves)
-    for (let k = bursts.length - 1; k >= 0; k--) {
-      const b = bursts[k];
-      b.life += 0.028;
-      const scale = 1 / (1 + b.life * 1.8);
-      const attr = b.pts.geometry.getAttribute("position");
-      for (let i = 0; i < attr.count; i++) {
-        attr.array[i * 3] += b.vel[i * 3] * 0.05;
-        attr.array[i * 3 + 1] += b.vel[i * 3 + 1] * 0.05;
-        attr.array[i * 3 + 2] += b.vel[i * 3 + 2] * 0.05;
-        b.vel[i * 3 + 1] -= 0.012; // gravity bob
+      // lấp lánh sao: xoay sprite điểm ảnh chậm → các sao "nháy" đổi độ sáng;
+      // tinh vân trôi cực chậm cho cảm giác không gian sống
+      twinkleMat.map.rotation += 0.0009;
+      for (let ni = 0; ni < nebSprites.length; ni++) {
+        nebSprites[ni].material.rotation += nebulae[ni].rot;
       }
-      attr.needsUpdate = true;
-      b.pts.material.opacity = Math.max(0, 1 - b.life);
-      const s = scale * 2.2;
-      b.pts.scale.setScalar(s); // thu nhỏ quanh TÂM điểm nổ (tọa độ tuyệt đối)
-      b.pts.position.copy(b.origin).multiplyScalar(1 - s);
-      if (b.life >= b.maxLife) {
-        scene.remove(b.pts);
-        b.pts.geometry.dispose();
-        b.pts.material.dispose();
-        bursts.splice(k, 1);
+
+      // update click bursts (particles + shockwaves)
+      for (let k = bursts.length - 1; k >= 0; k--) {
+        const b = bursts[k];
+        b.life += 0.028;
+        const scale = 1 / (1 + b.life * 1.8);
+        const attr = b.pts.geometry.getAttribute("position");
+        for (let i = 0; i < attr.count; i++) {
+          attr.array[i * 3] += b.vel[i * 3] * 0.05;
+          attr.array[i * 3 + 1] += b.vel[i * 3 + 1] * 0.05;
+          attr.array[i * 3 + 2] += b.vel[i * 3 + 2] * 0.05;
+          b.vel[i * 3 + 1] -= 0.012; // gravity bob
+        }
+        attr.needsUpdate = true;
+        b.pts.material.opacity = Math.max(0, 1 - b.life);
+        const s = scale * 2.2;
+        b.pts.scale.setScalar(s); // thu nhỏ quanh TÂM điểm nổ (tọa độ tuyệt đối)
+        b.pts.position.copy(b.origin).multiplyScalar(1 - s);
+        if (b.life >= b.maxLife) {
+          scene.remove(b.pts);
+          b.pts.geometry.dispose();
+          b.pts.material.dispose();
+          bursts.splice(k, 1);
+        }
       }
     }
     for (let s = shockwaves.length - 1; s >= 0; s--) {

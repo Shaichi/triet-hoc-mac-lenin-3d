@@ -7,10 +7,15 @@
   --red-glow: rgba(224, 34, 43, 0.55);
   --gold: #e8b54d;
   --cream: #f2ede2;
-  --muted: rgba(242, 237, 226, 0.62);
+  --muted: rgba(242, 237, 226, 0.78);
   --panel: rgba(13, 17, 28, 0.88);
   --panel-border: rgba(232, 181, 77, 0.35);
   --radius: 14px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .loader-fill { width: 100%; }
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
