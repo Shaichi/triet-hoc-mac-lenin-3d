@@ -1,0 +1,24 @@
+/* Font dự phòng offline — chỉ dùng khi Google Fonts không tải được.
+   Nạp SAU style.css; nếu Google đã nạp @font-face cùng tên, trình duyệt
+   dùng nguồn đầu tiên thành công, file này chỉ là fallback. */
+@font-face {
+  font-family: "Be Vietnam Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local("Be Vietnam Pro"), url("../fonts/be-vietnam-pro-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Be Vietnam Pro";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local("Be Vietnam Pro"), url("../fonts/be-vietnam-pro-600.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Be Vietnam Pro";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local("Be Vietnam Pro"), url("../fonts/be-vietnam-pro-700.woff2") format("woff2");
+}
