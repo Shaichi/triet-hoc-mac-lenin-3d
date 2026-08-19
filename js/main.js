@@ -416,6 +416,7 @@
   const nodes = buildNodes();
   const meshes = [];
   const labels = [];
+  const nodeIndex = {}; // id -> node Group (điền trong buildAllNodes, dùng bởi selectNodeById)
 
   // CSS2D-style label via sprites (works without plugin, always faces camera)
   function makeLabel(text, subtitle, color) {
@@ -1140,7 +1141,9 @@
     });
 
     // Build a flat list of every clickable mesh inside the node groups
+    // + index id -> node Group cho selectNodeById (điều hướng/tìm kiếm/timeline)
     meshes.forEach(function (m) {
+      nodeIndex[m.userData.node.id] = m;
       m.traverse(function (child) {
         if (child.isMesh) clickables.push(child);
       });
@@ -1205,19 +1208,7 @@
     if (hits.length > 0) {
       const nodeGroupHit = findNodeFromHit(hits[0]);
       if (!nodeGroupHit) return;
-      const node = nodeGroupHit.userData.node;
-      showInfo(node);
-      // Lấy toạ độ THẾ GIỚI thực của mô hình (nodeGroup đang nghiêng)
-      // rồi đặt camera nhìn về phía nó theo hướng gần vuông góc mặt đĩa thiên hà
-      // → mô hình luôn ở đúng tâm khung hình, không bị lệch
-      const target = nodeGroupHit.getWorldPosition(new THREE.Vector3());
-      const normal = new THREE.Vector3(0, 0, 1).applyQuaternion(nodeGroup.quaternion);
-      const dir = target.clone().sub(controls.target).normalize();
-      const up = dir.dot(normal) >= 0 ? normal : normal.clone().negate();
-      const camDir = up.clone().add(dir.multiplyScalar(0.4)).normalize();
-      const viewDist = nodeGroupHit.userData.isLaw ? 26 : 21;
-      flyTo(target.clone().add(camDir.multiplyScalar(viewDist)), target);
-      burstAt(target, nodeGroupHit.userData.color);
+      selectNodeById(nodeGroupHit.userData.node.id);
     }
   }
 
@@ -1258,7 +1249,39 @@
   const infoPanel = document.getElementById("info-panel");
   const infoContent = document.getElementById("info-content");
 
+  // Chọn & hiển thị node theo id — dùng chung cho raycast click, prev/next,
+  // liên kết "Liên quan", tìm kiếm (T8) và timeline (T14).
+  function selectNodeById(id) {
+    const m = nodeIndex[id];
+    if (!m) return;
+    const node = m.userData.node;
+    showInfo(node);
+    const target = m.getWorldPosition(new THREE.Vector3());
+    const normal = new THREE.Vector3(0, 0, 1).applyQuaternion(nodeGroup.quaternion);
+    const dir = target.clone().sub(controls.target).normalize();
+    const up = dir.dot(normal) >= 0 ? normal : normal.clone().negate();
+    const camDir = up.clone().add(dir.multiplyScalar(0.4)).normalize();
+    const viewDist = m.userData.isLaw ? 26 : 21;
+    flyTo(target.clone().add(camDir.multiplyScalar(viewDist)), target);
+    burstAt(target, m.userData.color);
+  }
+
   function showInfo(node) {
+    const idx = nodes.indexOf(node);
+    const prevN = nodes[(idx - 1 + nodes.length) % nodes.length];
+    const nextN = nodes[(idx + 1) % nodes.length];
+    const relHtml = (node.related || []).length
+      ? '<div class="info-related"><span class="lbl">Liên quan</span>' +
+        node.related.map(function (rid) {
+          const rn = nodes.find(function (x) { return x.id === rid; });
+          return rn ? '<button class="rel-link" data-node="' + rid + '">→ ' + rn.vi + '</button>' : "";
+        }).join("") + "</div>"
+      : "";
+    const navHtml =
+      '<div class="info-nav">' +
+      '<button class="sim-btn" data-nav="prev">← ' + prevN.vi + '</button>' +
+      '<button class="sim-btn" data-nav="next">' + nextN.vi + ' →</button>' +
+      '</div>';
     const simLink = node.sim ? '<div class="sim-launch"><button class="sim-btn sim-play" data-sim="' + node.sim + '">▶ Mở mô phỏng trực quan</button></div>' : "";
     infoContent.innerHTML =
       '<span class="info-tag">' + (node.rule || "Khái niệm") + '</span>' +
@@ -1266,11 +1289,20 @@
       '<div class="info-rule">' + node.rule + '</div>' +
       '<div class="info-body">' + node.body + '</div>' +
       '<div class="info-example"><span class="lbl">Ví dụ minh họa</span>' + node.example + '</div>' +
-      simLink;
+      simLink +
+      navHtml +
+      relHtml;
     infoPanel.classList.remove("hidden");
 
     const btn = infoContent.querySelector('[data-sim]');
     if (btn) btn.addEventListener("click", function () { openSim(btn.dataset.sim); });
+
+    infoContent.querySelectorAll("[data-nav]").forEach(function (b) {
+      b.addEventListener("click", function () { selectNodeById(b.dataset.nav === "prev" ? prevN.id : nextN.id); });
+    });
+    infoContent.querySelectorAll(".rel-link").forEach(function (b) {
+      b.addEventListener("click", function () { selectNodeById(b.dataset.node); });
+    });
 
     document.getElementById("current-target").textContent = "Đang xem: " + node.vi;
   }

@@ -225,6 +225,18 @@ html, body {
   font-size: .88rem;
 }
 
+/* ---------- Điều hướng node Trước/Sau + liên kết liên quan ---------- */
+.info-nav { display: flex; gap: 8px; margin-top: 14px; }
+.info-nav .sim-btn { flex: 1; font-size: .7rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.info-related { margin-top: 12px; display: flex; flex-direction: column; gap: 6px; }
+.info-related .lbl { font-size: .66rem; text-transform: uppercase; letter-spacing: .08em; color: var(--gold); font-weight: 700; }
+.rel-link {
+  text-align: left; padding: 7px 10px; border-radius: 8px; cursor: pointer;
+  border: 1px solid rgba(242,237,226,.15); background: rgba(242,237,226,.05);
+  color: var(--cream); font-family: inherit; font-size: .76rem; transition: all .2s;
+}
+.rel-link:hover { border-color: var(--gold); color: var(--gold); }
+
 /* ---------- Simulation panel ---------- */
 #sim-panel {
   position: fixed;

@@ -195,6 +195,7 @@ const DATA = {
       vi: "Nguyên nhân và kết quả",
 
       rule: "Cặp phạm trù",
+      related: ["cat-necessity-contingency", "cat-essence-phenomenon"],
       body: "<p><b>Nguyên nhân</b> là phạm trù chỉ sự tác động lẫn nhau giữa các mặt trong một sự vật gây ra biến đổi nhất định; <b>kết quả</b> là những biến đổi xuất hiện do tác động đó.</p><p>Nguyên nhân sinh ra kết quả, kết quả tác động trở lại nguyên nhân. Cùng một nguyên nhân có thể gây nhiều kết quả và ngược lại.</p>",
       example: "Bỏ bê học tập (nguyên nhân) → thi trượt (kết quả). Thi trượt (giờ là nguyên nhân) → động lực học lại chăm chỉ hơn (kết quả mới).",
       pos: [-34.4, -72.7, 4.6]
@@ -228,6 +229,7 @@ const DATA = {
       vi: "Quy luật thống nhất và đấu tranh của các mặt đối lập",
 
       rule: "Quy luật cơ bản 1 · Hạt nhân của phép biện chứng",
+      related: ["law-quantity-quality", "law-negation", "principle-development"],
       body: "<p>Mọi sự vật đều tồn tại những <b>mặt đối lập</b> vừa thống nhất vừa đấu tranh với nhau. <b>Thống nhất</b> là sự liên hệ, quy định, gắn bó lẫn nhau; <b>đấu tranh</b> là sự bài trừ, phủ định lẫn nhau.</p><p>Đấu tranh của các mặt đối lập là <b>nguồn gốc, động lực của sự vận động và phát triển</b>. Quy luật này là <i>“hạt nhân”</i> của phép biện chứng duy vật.</p><p>Ý nghĩa phương pháp: phải nhận thức và giải quyết mâu thuẫn, phân biệt mâu thuẫn cơ bản và không cơ bản, mâu thuẫn chủ yếu và thứ yếu, mặt chủ yếu và thứ yếu.</p>",
       example: "Trong một tế bào luôn diễn ra đồng hóa (tổng hợp) và dị hóa (phân giải) — hai mặt đối lập đấu tranh nhau, là nguồn sống của tế bào. Giai cấp công nhân và tư sản trong xã hội tư bản cũng vậy.",
       sim: "contradiction",
@@ -239,6 +241,7 @@ const DATA = {
       vi: "Quy luật lượng – chất (chuyển hóa những thay đổi về lượng thành những thay đổi về chất)",
 
       rule: "Quy luật cơ bản 2",
+      related: ["law-contradiction", "law-negation"],
       body: "<p><b>Lượng</b> là tính quy định khách quan biểu thị quy mô, tốc độ, nhịp điệu; <b>chất</b> là tính quy định khách quan biểu thị tính quy định, cấu trúc của sự vật, cái mà nhờ đó sự vật là nó chứ không phải cái khác.</p><p>Quy luật: <b>lượng đổi → chất đổi</b>. Lượng tích lũy dần đến điểm nút (độ), vượt điểm nút gây bước nhảy làm thay đổi về chất; chất mới lại mở ra lượng mới.</p><p>Vận dụng: tích lũy dần từng ngày, chuẩn bị cho bước nhảy; tránh cả tư tưởng nóng vội và trì trệ bảo thủ.</p>",
       example: "Nước: tăng dần nhiệt độ (lượng) từ 0°C đến 100°C (điểm nút) → bước nhảy → nước sôi thành hơi (chất mới). Học tập mỗi ngày một ít (lượng) đủ lâu sẽ tạo nên kiến thức mới (chất).",
       sim: "quantity-quality",
@@ -250,6 +253,7 @@ const DATA = {
       vi: "Quy luật phủ định của phủ định",
 
       rule: "Quy luật cơ bản 3",
+      related: ["law-contradiction", "law-quantity-quality"],
       body: "<p><b>Phủ định biện chứng</b> không phải là xóa bỏ hoàn toàn mà là sự phủ định gắn với sự kế thừa (vừa phủ định vừa giữ lại cái hợp lý).</p><p>Quy luật: quá trình phát triển đi theo đường <b>“xoáy ốc”</b> — khẳng định → phủ định → phủ định của phủ định, kết thúc bằng một trình độ cao hơn. Cái mới ra đời nhưng vẫn giữ lại cái tích cực của cái cũ.</p><p>Vận dụng: kế thừa có phê phán; không phủ định sạch trơn lịch sử, cũng không bảo thủ nguyên xi.</p>",
       example: "Hạt lúa → (phủ định) → cây lúa → (phủ định của phủ định) → hạt lúa mới. Hạt mới nhiều hơn, tốt hơn hạt ban đầu — sự phát triển như đường xoáy ốc đi lên.",
       sim: "negation",
@@ -293,6 +297,7 @@ const DATA = {
       vi: "Nhận thức cảm tính",
 
       rule: "",
+      related: ["cog-rational", "cog-process"],
       body: "<p>Nhận thức cảm tính là giai đoạn nhận thức <b>trực quan, sinh động</b>: con người tiếp xúc trực tiếp với sự vật qua cảm giác, tri giác, biểu tượng.</p><p>Nó phản ánh những mặt bên ngoài, từng thuộc tính riêng lẻ của sự vật. Đây là cơ sở, là điểm xuất phát của nhận thức nhưng chưa nắm được bản chất.</p>",
       example: "Nhìn thấy màu đỏ, ngửi thấy mùi thơm, sờ thấy mát lạnh của một quả táo — đó là những hình ảnh cảm tính.",
       pos: [-83.8, 55.4, 4.7]
@@ -304,6 +309,7 @@ const DATA = {
       vi: "Nhận thức lý tính",
 
       rule: "",
+      related: ["cog-sensuous", "cog-return-practice"],
       body: "<p>Nhận thức lý tính là giai đoạn nhận thức <b>trừu tượng, khái quát</b>: dựa trên tài liệu cảm tính mà phân tích, tổng hợp, khái niệm hóa, phán đoán, suy lý.</p><p>Nhận thức lý tính nắm được bản chất, quy luật, tính tất yếu của sự vật — cao hơn hẳn cảm tính nhưng không tách rời cảm tính.</p>",
       example: "Sau khi quan sát nhiều quả táo, con người khái quát: “Táo là loại quả giàu chất xơ” — đó là nhận thức lý tính.",
       pos: [-87.6, 55.3, -3.2]
