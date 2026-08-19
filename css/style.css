@@ -532,8 +532,16 @@ html, body {
 
 /* Responsive */
 @media (max-width: 860px) {
-  #info-panel { width: min(320px, calc(100vw - 20px)); right: 10px; }
-  #sim-panel { width: min(320px, calc(100vw - 20px)); left: 10px; }
+  #info-panel {
+    top: auto; bottom: 0; right: 0; left: 0; width: 100%;
+    max-height: 46vh; border-radius: 16px 16px 0 0;
+    animation: slide-up .28s ease;
+  }
+  #sim-panel {
+    top: auto; bottom: 0; right: 0; left: 0; width: 100%;
+    max-height: 54vh; border-radius: 16px 16px 0 0;
+  }
+  @keyframes slide-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
   .brand p { display: none; }
   .brand h1 { font-size: .98rem; }
   #titlebar { padding: 10px 14px; }

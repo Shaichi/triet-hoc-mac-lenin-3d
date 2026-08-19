@@ -1302,6 +1302,7 @@
   }
 
   function showInfo(node) {
+    if (simPanel && !simPanel.classList.contains("hidden")) closeSim(true);
     markVisited(node.id);
     const idx = nodes.indexOf(node);
     const prevN = nodes[(idx - 1 + nodes.length) % nodes.length];
@@ -1569,6 +1570,7 @@
   function openSim(id) {
     const conf = SIMS[id];
     if (!conf) return;
+    if (infoPanel) infoPanel.classList.add("hidden"); // mobile: hai panel không chồng nhau
     simTitle.textContent = conf.title;
     simCaption.innerHTML = conf.caption;
     // Play button
@@ -1589,7 +1591,7 @@
     buildSim(conf, document.getElementById("sim-canvas"));
   }
 
-  function closeSim() {
+  function closeSim(keepCamera) {
     meshes.forEach(clearHoverGlow); // đóng panel → xóa glow còn treo
     simPanel.classList.add("hidden");
     if (sim && sim.dispose) sim.dispose();
@@ -1600,7 +1602,7 @@
       window.removeEventListener("resize", simResize);
       simResize = null;
     }
-    resetCamera();
+    if (!keepCamera) resetCamera();
   }
 
   // Build a per-simulation scene (own renderer on the small canvas)
