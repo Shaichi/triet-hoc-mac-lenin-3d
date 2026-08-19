@@ -72,6 +72,14 @@ window.addEventListener("error", function (ev) {
     <button class="nav-btn nav-timeline" id="btn-timeline">🕰 Lịch sử</button>
   </nav>
 
+  <div class="search-wrap">
+    <button id="btn-search" class="nav-btn" title="Tìm khái niệm (phím /)">🔍 Tìm kiếm</button>
+    <div id="search-panel" class="hidden">
+      <input id="search-input" type="text" placeholder="Gõ tên khái niệm… (vd: mâu thuẫn)" autocomplete="off" />
+      <div id="search-results"></div>
+    </div>
+  </div>
+
   <div class="mobile-menu">
     <button id="hamburger" class="hamburger" aria-label="Mở menu">☰</button>
     <div id="mobile-nav" class="mobile-nav hidden">

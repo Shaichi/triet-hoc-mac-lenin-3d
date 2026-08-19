@@ -1405,6 +1405,54 @@
     }
   });
 
+  // ---------- Tìm kiếm khái niệm ----------
+  const searchPanel = document.getElementById("search-panel");
+  const searchInput = document.getElementById("search-input");
+  const searchResults = document.getElementById("search-results");
+  const btnSearch = document.getElementById("btn-search");
+
+  function vnFold(s) { // bỏ dấu tiếng Việt để khớp kiểu gõ không dấu
+    return (s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d");
+  }
+  function runSearch(q) {
+    if (!searchResults) return;
+    const f = vnFold(q.trim());
+    searchResults.innerHTML = "";
+    if (!f) return;
+    const hits = nodes.filter(function (n) {
+      return vnFold(n.vi).indexOf(f) !== -1 || vnFold(n.rule || "").indexOf(f) !== -1;
+    }).slice(0, 8);
+    if (!hits.length) {
+      searchResults.innerHTML = '<div class="search-empty">Không tìm thấy khái niệm phù hợp</div>';
+      return;
+    }
+    hits.forEach(function (n) {
+      const b = document.createElement("button");
+      b.className = "rel-link";
+      b.innerHTML = "<b>" + n.vi + "</b><small>" + (n.rule || DATA[n.tag].title) + "</small>";
+      b.addEventListener("click", function () {
+        if (searchPanel) searchPanel.classList.add("hidden");
+        selectNodeById(n.id);
+      });
+      searchResults.appendChild(b);
+    });
+  }
+  if (btnSearch && searchPanel && searchInput) {
+    btnSearch.addEventListener("click", function () {
+      searchPanel.classList.toggle("hidden");
+      if (!searchPanel.classList.contains("hidden")) { searchInput.value = ""; runSearch(""); searchInput.focus(); }
+    });
+    searchInput.addEventListener("input", function () { runSearch(searchInput.value); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "/" && document.activeElement.tagName !== "INPUT") {
+        e.preventDefault();
+        searchPanel.classList.remove("hidden");
+        searchInput.focus();
+      }
+      if (e.key === "Escape") searchPanel.classList.add("hidden");
+    });
+  }
+
   // ---------- Timeline lịch sử ----------
   const timelineModal = document.getElementById("timeline-modal");
   const tlTitle = document.getElementById("tl-title");
