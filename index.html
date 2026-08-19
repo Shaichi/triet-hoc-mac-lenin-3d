@@ -81,7 +81,7 @@ window.addEventListener("error", function (ev) {
   </div>
 
   <div class="mobile-menu">
-    <button id="hamburger" class="hamburger" aria-label="Mở menu">☰</button>
+    <button id="hamburger" class="hamburger" aria-label="Mở menu chủ đề" aria-expanded="false">☰</button>
     <div id="mobile-nav" class="mobile-nav hidden">
       <button class="nav-btn" data-topic="materialism">Duy vật</button>
       <button class="nav-btn" data-topic="dialectics">Biện chứng</button>
@@ -94,15 +94,15 @@ window.addEventListener("error", function (ev) {
 </header>
 
 <!-- ===== Panel info khái niệm (bên phải) ===== -->
-<div id="info-panel" class="hidden">
-  <button id="info-close" title="Đóng">✕</button>
+<div id="info-panel" class="hidden" role="dialog" aria-label="Nội dung khái niệm">
+  <button id="info-close" title="Đóng" aria-label="Đóng bảng khái niệm">✕</button>
   <div id="info-content"></div>
 </div>
 
 <!-- ===== Overlay hướng dẫn ===== -->
-<div id="help" class="hidden">
+<div id="help" class="hidden" role="dialog" aria-modal="true" aria-label="Hướng dẫn sử dụng">
   <div class="card">
-    <button id="help-close" title="Đóng">✕</button>
+    <button id="help-close" title="Đóng" aria-label="Đóng bảng hướng dẫn">✕</button>
     <h2>Hướng dẫn</h2>
     <ul id="help-list">
       <li data-kind="mouse"><b>Kéo:</b> xoay camera quan sát toàn cảnh</li>
@@ -117,10 +117,10 @@ window.addEventListener("error", function (ev) {
 </div>
 
 <!-- ===== Panel mô phỏng quy luật (bên trái, mở khi nhấn các quy luật) ===== -->
-<div id="sim-panel" class="hidden">
+<div id="sim-panel" class="hidden" role="dialog" aria-label="Mô phỏng quy luật">
   <div class="sim-header">
     <h2 id="sim-title"></h2>
-    <button id="sim-close">✕</button>
+    <button id="sim-close" title="Đóng" aria-label="Đóng bảng mô phỏng">✕</button>
   </div>
   <canvas id="sim-canvas"></canvas>
   <div id="sim-caption"></div>
@@ -128,9 +128,9 @@ window.addEventListener("error", function (ev) {
 </div>
 
 <!-- ===== Timeline lịch sử ===== -->
-<div id="timeline-modal" class="hidden">
+<div id="timeline-modal" class="hidden" role="dialog" aria-modal="true" aria-label="Dòng thời gian lịch sử">
   <div class="tl-card">
-    <button id="timeline-close">✕</button>
+    <button id="timeline-close" title="Đóng" aria-label="Đóng dòng thời gian">✕</button>
     <h2 id="tl-title"></h2>
     <p id="tl-intro"></p>
     <div id="tl-eras"></div>

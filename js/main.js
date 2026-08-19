@@ -81,6 +81,7 @@
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.domElement.tabIndex = -1;
   container.appendChild(renderer.domElement);
 
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -1342,6 +1343,7 @@
     });
 
     document.getElementById("current-target").textContent = "Đang xem: " + node.vi;
+    focusIn(infoPanel);
   }
 
   function hideInfo(reset) {
@@ -1431,13 +1433,22 @@
 
   // ---------- Mobile hamburger menu ----------
   const mobileNav = document.getElementById("mobile-nav");
-  function closeMobileMenu() { mobileNav.classList.add("hidden"); }
-  document.getElementById("hamburger").addEventListener("click", function (e) {
-    e.stopPropagation();
-    mobileNav.classList.toggle("hidden");
-  });
+  const hamburgerBtn = document.getElementById("hamburger");
+  function closeMobileMenu() {
+    if (mobileNav) mobileNav.classList.add("hidden");
+    if (hamburgerBtn) hamburgerBtn.setAttribute("aria-expanded", "false");
+  }
+  if (hamburgerBtn) {
+    hamburgerBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      if (mobileNav) {
+        mobileNav.classList.toggle("hidden");
+        this.setAttribute("aria-expanded", String(!mobileNav.classList.contains("hidden")));
+      }
+    });
+  }
   document.addEventListener("click", function (e) {
-    if (!mobileNav.classList.contains("hidden") && !e.target.closest(".mobile-menu")) {
+    if (mobileNav && !mobileNav.classList.contains("hidden") && !e.target.closest(".mobile-menu")) {
       closeMobileMenu();
     }
   });
@@ -1503,6 +1514,7 @@
 
     buildTimelineEraTabs();
     filterTimeline(0);
+    focusIn(timelineModal);
   }
 
   function buildTimelineEraTabs() {
@@ -1589,6 +1601,7 @@
     playing = true;
     // Lấy canvas HIỆN TẠI (có thể là canvas của renderer lần mở trước)
     buildSim(conf, document.getElementById("sim-canvas"));
+    focusIn(simPanel);
   }
 
   function closeSim(keepCamera) {
@@ -2410,22 +2423,34 @@
 
   // ---------- Keyboard & help ----------
   const help = document.getElementById("help");
+  function focusIn(el) {
+    if (!el) return;
+    const f = el.querySelector("button, input, [tabindex]");
+    if (f) f.focus();
+  }
+  const openPanels = function () {
+    return [timelineModal, simPanel, infoPanel, help, searchPanel, mobileNav].filter(
+      function (el) { return el && !el.classList.contains("hidden"); });
+  };
+
   document.getElementById("help-close").addEventListener("click", function () { help.classList.add("hidden"); });
   document.getElementById("help-done").addEventListener("click", function () { help.classList.add("hidden"); });
   document.addEventListener("keydown", function (e) {
-    if (e.key === "h" || e.key === "H") help.classList.toggle("hidden");
+    if ((e.key === "h" || e.key === "H") && document.activeElement.tagName !== "INPUT") {
+      help.classList.toggle("hidden");
+      if (!help.classList.contains("hidden")) focusIn(help);
+    }
     if (e.key === "Escape") {
-      help.classList.add("hidden");
-      // Chỉ kéo camera về trung tâm nếu thật sự đang xem cái gì đó — tránh "giật" cảnh khi nhấn Esc vu vơ
-      const somethingOpen =
-        !infoPanel.classList.contains("hidden") ||
-        !simPanel.classList.contains("hidden") ||
-        !timelineModal.classList.contains("hidden");
-      if (somethingOpen) {
-        hideInfo();
-        closeSim();
-        hideTimeline();
-      }
+      const open = openPanels();
+      if (!open.length) return;
+      const top = open[0]; // thứ tự: timeline > sim > info > help > search > menu
+      if (top === timelineModal) hideTimeline();
+      else if (top === simPanel) closeSim();
+      else if (top === infoPanel) hideInfo(true);
+      else if (top === help) help.classList.add("hidden");
+      else if (top === searchPanel) searchPanel.classList.add("hidden");
+      else if (top === mobileNav) closeMobileMenu();
+      if (renderer && renderer.domElement) renderer.domElement.focus();
     }
   });
 
