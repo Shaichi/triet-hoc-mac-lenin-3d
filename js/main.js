@@ -2828,6 +2828,39 @@
   window.__testCloseSim = function () { closeSim(); };
   window.__mlnTopicCenter = function (key) { return topicCenter(key); };
 
+  // ---------- Đường nối cụm (toggle được) ----------
+  const linkGroup = new THREE.Group();
+  nodeGroup.add(linkGroup);
+  let linksVisible = false;
+
+  function buildClusterLinks() {
+    ["materialism", "dialectics", "materialist-dialectics", "cognition", "practice"].forEach(function (key) {
+      const c = topicCenter(key);
+      if (!c) return;
+      const local = nodeGroup.worldToLocal(c.clone()); // tọa độ cục bộ trong nodeGroup
+      const members = meshes.filter(function (m) { return m.userData.node.tag === key; });
+      const color = DATA[key] ? DATA[key].color : 0xffffff;
+      members.forEach(function (m) {
+        const p = m.position; // cục bộ trong nodeGroup
+        const mid = p.clone().lerp(local, 0.5).add(new THREE.Vector3(0, 0, 4)); // vòng cung nhẹ
+        const curve = new THREE.CatmullRomCurve3([p.clone(), mid, local.clone()]);
+        const geo = new THREE.BufferGeometry().setFromPoints(curve.getPoints(24));
+        const line = new THREE.Line(geo, new THREE.LineBasicMaterial({
+          color: color, transparent: true, opacity: 0.16,
+          blending: THREE.AdditiveBlending, depthWrite: false
+        }));
+        linkGroup.add(line);
+      });
+    });
+    linkGroup.visible = false;
+  }
+
+  window.__mlnToggleLinks = function (on) {
+    linksVisible = on === undefined ? !linkGroup.visible : on;
+    linkGroup.visible = linksVisible;
+    return linksVisible;
+  };
+
   // Start
   // Vẽ nhãn CHỈ KHI font đã tải — nếu không, canvas label lần load đầu
   // sẽ dùng font fallback (chữ khác hẳn thiết kế). document.fonts có sẵn
@@ -2841,6 +2874,14 @@
   }
   whenFontReady(function () {
     buildAllNodes();
+    buildClusterLinks();
+    const btnLinks = document.getElementById("btn-links");
+    if (btnLinks) {
+      btnLinks.addEventListener("click", function () {
+        window.__mlnToggleLinks();
+        this.classList.toggle("active", linkGroup.visible);
+      });
+    }
     animate(); // chuyển lời gọi animate() về đây
   });
 })();
