@@ -24,6 +24,7 @@
   <header id="titlebar"><div class="brand"><span class="brand-icon">◉</span><div><h1>p</h1><p>p</p></div></div>
     <nav class="top-nav">
       <button class="nav-btn nav-timeline" id="btn-timeline">🕰 Lịch sử</button>
+      <button class="nav-btn" id="btn-quiz">✎ Ôn tập</button>
     </nav>
     <div class="search-wrap">
       <button id="btn-search" class="nav-btn" title="Tìm kiếm">🔍</button>
@@ -35,6 +36,7 @@
     <div class="mobile-menu"><button id="hamburger" aria-label="menu">☰</button>
       <div id="mobile-nav" class="mobile-nav hidden">
         <button class="nav-btn nav-timeline" id="btn-timeline-mobile">🕰 Lịch sử</button>
+        <button class="nav-btn" id="btn-quiz-mobile">✎ Ôn tập</button>
       </div></div>
   </header>
   <div id="info-panel" class="hidden"><button id="info-close">✕</button><div id="info-content"></div></div>
@@ -45,6 +47,8 @@
     <div id="sim-caption"></div><div id="sim-controls"></div></div>
   <div id="timeline-modal" class="hidden"><div class="tl-card"><button id="timeline-close">✕</button>
     <h2 id="tl-title"></h2><p id="tl-intro"></p><div id="tl-eras"></div><div id="tl-track"></div></div></div>
+  <div id="quiz-modal" class="hidden"><div class="tl-card quiz-card"><button id="quiz-close">✕</button>
+    <h2>✎ Ôn tập</h2><p id="quiz-status"></p><div id="quiz-body"></div></div></div>
   <footer id="footer"><span id="current-target"></span><span id="progress-count"></span><span class="hint"></span></footer>
 
   <script src="../js/vendor/three.min.js"></script>

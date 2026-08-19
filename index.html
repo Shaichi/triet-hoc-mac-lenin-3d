@@ -70,6 +70,7 @@ window.addEventListener("error", function (ev) {
     <button class="nav-btn" data-topic="cognition">Nhận thức luận</button>
     <button class="nav-btn" data-topic="practice">Thực tiễn</button>
     <button class="nav-btn nav-timeline" id="btn-timeline">🕰 Lịch sử</button>
+    <button class="nav-btn" id="btn-quiz">✎ Ôn tập</button>
   </nav>
 
   <div class="search-wrap">
@@ -89,6 +90,7 @@ window.addEventListener("error", function (ev) {
       <button class="nav-btn" data-topic="cognition">Nhận thức luận</button>
       <button class="nav-btn" data-topic="practice">Thực tiễn</button>
       <button class="nav-btn nav-timeline" id="btn-timeline-mobile">🕰 Lịch sử</button>
+      <button class="nav-btn" id="btn-quiz-mobile">✎ Ôn tập</button>
     </div>
   </div>
 </header>
@@ -135,6 +137,16 @@ window.addEventListener("error", function (ev) {
     <p id="tl-intro"></p>
     <div id="tl-eras"></div>
     <div id="tl-track"></div>
+  </div>
+</div>
+
+<!-- ===== Ôn tập trắc nghiệm ===== -->
+<div id="quiz-modal" class="hidden" role="dialog" aria-modal="true" aria-label="Ôn tập trắc nghiệm">
+  <div class="tl-card quiz-card">
+    <button id="quiz-close" title="Đóng" aria-label="Đóng ôn tập">✕</button>
+    <h2>✎ Ôn tập nhanh</h2>
+    <p id="quiz-status"></p>
+    <div id="quiz-body"></div>
   </div>
 </div>
 

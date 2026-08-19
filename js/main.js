@@ -1568,6 +1568,105 @@
     if (e.target === timelineModal) hideTimeline();
   });
 
+  // ---------- Quiz ôn tập (sinh từ dữ liệu node, không hard-code câu hỏi) ----------
+  const quizModal = document.getElementById("quiz-modal");
+  const btnQuiz = document.getElementById("btn-quiz");
+  const btnQuizMobile = document.getElementById("btn-quiz-mobile");
+  const quizClose = document.getElementById("quiz-close");
+  let quizQ = [], quizIdx = 0, quizScore = 0;
+
+  function shuffle(a) {
+    const arr = a.slice();
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
+  }
+
+  function stripHtml(html) {
+    const d = document.createElement("div");
+    d.innerHTML = html || "";
+    return d.textContent || "";
+  }
+
+  function makeQuiz() {
+    quizQ = shuffle(nodes).slice(0, 10).map(function (n) {
+      const sameTag = nodes.filter(function (x) { return x.tag === n.tag && x.id !== n.id; });
+      const wrong = shuffle(sameTag).slice(0, 3).map(function (x) { return x.vi; });
+      while (wrong.length < 3) {
+        const other = nodes[Math.floor(Math.random() * nodes.length)];
+        if (other.id !== n.id && wrong.indexOf(other.vi) === -1) wrong.push(other.vi);
+      }
+      return { q: stripHtml(n.example), answer: n.vi, options: shuffle([n.vi].concat(wrong)), explain: n.vi };
+    });
+    quizIdx = 0; quizScore = 0;
+  }
+
+  function renderQuizQ() {
+    const body = document.getElementById("quiz-body");
+    const st = document.getElementById("quiz-status");
+    if (st) st.textContent = "Câu " + (quizIdx + 1) + "/" + quizQ.length + " · Đúng: " + quizScore;
+    const q = quizQ[quizIdx];
+    if (!body || !q) return;
+    body.innerHTML = '<p class="quiz-q">Ví dụ sau minh họa cho khái niệm nào?<br><i>“' + q.q + '”</i></p>';
+    q.options.forEach(function (opt) {
+      const b = document.createElement("button");
+      b.className = "quiz-opt"; b.textContent = opt;
+      b.addEventListener("click", function () {
+        const ok = opt === q.answer;
+        if (ok) quizScore++;
+        b.classList.add(ok ? "quiz-right" : "quiz-wrong");
+        body.querySelectorAll(".quiz-opt").forEach(function (x) {
+          x.disabled = true;
+          if (x.textContent === q.answer) x.classList.add("quiz-right");
+        });
+        const next = document.createElement("button");
+        next.className = "btn-primary quiz-next"; next.textContent = quizIdx + 1 < quizQ.length ? "Câu tiếp →" : "Xem kết quả";
+        next.addEventListener("click", function () {
+          quizIdx++;
+          if (quizIdx < quizQ.length) renderQuizQ(); else renderQuizEnd();
+        });
+        body.appendChild(next);
+      });
+      body.appendChild(b);
+    });
+  }
+
+  function renderQuizEnd() {
+    const best = Math.max(progress.quizBest || 0, quizScore);
+    progress.quizBest = best;
+    try { localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress)); } catch (e) {}
+    const st = document.getElementById("quiz-status");
+    if (st) st.textContent = "";
+    const body = document.getElementById("quiz-body");
+    if (body) {
+      body.innerHTML =
+        '<div class="quiz-score">' + quizScore + "/" + quizQ.length + '</div>' +
+        '<p>' + (quizScore >= 8 ? "Xuất sắc! Bạn nắm vững các khái niệm." : quizScore >= 5 ? "Khá tốt — hãy khám phá thêm các node còn sai." : "Hãy bay qua các cụm chủ đề một lượt rồi thử lại nhé.") + '</p>' +
+        '<button class="btn-primary quiz-next" id="quiz-again">↺ Làm lại</button>';
+      const again = document.getElementById("quiz-again");
+      if (again) again.addEventListener("click", function () { makeQuiz(); renderQuizQ(); });
+    }
+  }
+
+  function openQuiz() {
+    makeQuiz();
+    renderQuizQ();
+    if (quizModal) {
+      quizModal.classList.remove("hidden");
+      closeMobileMenu();
+      focusIn(quizModal);
+    }
+  }
+
+  if (btnQuiz) btnQuiz.addEventListener("click", openQuiz);
+  if (btnQuizMobile) btnQuizMobile.addEventListener("click", openQuiz);
+  if (quizClose && quizModal) quizClose.addEventListener("click", function () { quizModal.classList.add("hidden"); });
+  if (quizModal) {
+    quizModal.addEventListener("click", function (e) { if (e.target === quizModal) quizModal.classList.add("hidden"); });
+  }
+
   // ---------- Simulation panel (3 laws) ----------
   const simPanel = document.getElementById("sim-panel");
   const simCaption = document.getElementById("sim-caption");
@@ -2430,7 +2529,7 @@
     if (f) f.focus();
   }
   const openPanels = function () {
-    return [timelineModal, simPanel, infoPanel, help, searchPanel, mobileNav].filter(
+    return [quizModal, timelineModal, simPanel, infoPanel, help, searchPanel, mobileNav].filter(
       function (el) { return el && !el.classList.contains("hidden"); });
   };
 
@@ -2444,8 +2543,9 @@
     if (e.key === "Escape") {
       const open = openPanels();
       if (!open.length) return;
-      const top = open[0]; // thứ tự: timeline > sim > info > help > search > menu
-      if (top === timelineModal) hideTimeline();
+      const top = open[0]; // thứ tự: quiz > timeline > sim > info > help > search > menu
+      if (top === quizModal) quizModal.classList.add("hidden");
+      else if (top === timelineModal) hideTimeline();
       else if (top === simPanel) closeSim();
       else if (top === infoPanel) hideInfo(true);
       else if (top === help) help.classList.add("hidden");
